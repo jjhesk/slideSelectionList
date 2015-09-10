@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="defaultShowTimeSlidingMenuTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--   <item name="background">@drawable/actionbar_bg_hb_logo</item>-->
+        <item name="indeterminateProgressStyle">@style/Widget.AppCompat.ProgressBar</item>
+        <item name="elevation">0dp</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="solidNavigationBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="indeterminateProgressStyle">@style/Widget.AppCompat.ProgressBar</item>
+        <item name="elevation">0dp</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+</resources>

@@ -1,1 +1,1 @@
-include ':app', ':slideselection'
+include ':app', ':slideselection', ":LayoutCollections"

@@ -1,16 +1,19 @@
-package com.hkm.slideselection;
+package com.tradlulu.tradlulu;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
+
+import com.hkm.slideselection.app.SimpleStepSelectionFragment;
 
 public class MainActivity extends AppCompatActivity {
+    SimpleStepSelectionFragment thecontroller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        thecontroller = (SimpleStepSelectionFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
     }
 
 
@@ -21,18 +24,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Take care of popping the fragment back stack or finishing the activity
+     * as appropriate.
+     */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (thecontroller != null)
+            thecontroller.onPressBack();
     }
 }

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/LayoutCollections/LayoutCollections.iml" filepath="$PROJECT_DIR$/LayoutCollections/LayoutCollections.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartSelectionList.iml" filepath="$PROJECT_DIR$/SmartSelectionList.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/slideselection/slideselection.iml" filepath="$PROJECT_DIR$/slideselection/slideselection.iml" />

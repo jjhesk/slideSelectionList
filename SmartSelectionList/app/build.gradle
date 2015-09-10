@@ -30,4 +30,5 @@ dependencies {
     //material scroll bar
     //https://github.com/krimin-killr21/MaterialScrollBar
     compile 'com.turingtechnologies.materialscrollbar:lib:3.0.1'
+    compile project(':slideselection')
 }

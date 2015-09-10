@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".App.SimpleLayout">
+
+    <View
+        android:id="@id/lylib_statusBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/statusMargin"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:gravity="top" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@id/lylib_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_below="@id/lylib_statusBar"
+        android:background="?attr/colorPrimary" />
+
+    <com.hkm.layout.Module.ControllableFrame
+        android:id="@id/lylib_main_frame_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lylib_toolbar" />
+</RelativeLayout>
