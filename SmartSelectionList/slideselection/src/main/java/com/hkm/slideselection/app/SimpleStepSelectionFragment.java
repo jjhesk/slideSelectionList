@@ -11,12 +11,28 @@ import android.view.ViewGroup;
 
 import com.hkm.layout.Module.NonSwipe;
 import com.hkm.slideselection.R;
+import com.hkm.slideselection.SimpleSingleList;
 import com.hkm.slideselection.StringControlAdapter;
+import com.hkm.slideselection.StringLv;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class SimpleStepSelectionFragment extends Fragment {
+
+
+    public static SimpleStepSelectionFragment firstLevel(StringLv level) {
+        SimpleStepSelectionFragment g = new SimpleStepSelectionFragment();
+        try {
+            g.setArguments(SimpleSingleList.stuffs(
+                    level.getSelection(),
+                    level.getSimpleSource()
+            ));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return g;
+    }
 
     public SimpleStepSelectionFragment() {
     }
@@ -47,7 +63,10 @@ public class SimpleStepSelectionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mViewPager = (NonSwipe) view.findViewById(getViewPager());
         mViewPager.setOffscreenPageLimit(99);
-        adapter = new StringControlAdapter(getChildFragmentManager());
+        if (getArguments().getStringArray(SimpleSingleList.DATASTRING) != null) {
+            adapter = new StringControlAdapter(getChildFragmentManager(), SimpleSingleList.newInstance(getArguments()));
+        } else
+            adapter = new StringControlAdapter(getChildFragmentManager());
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(0);
     }

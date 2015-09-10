@@ -1,17 +1,18 @@
 package com.hkm.slideselection;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by hesk on 10/9/15.
  */
-public class LevelResources<T> {
+public class LevelResources<T extends Serializable> {
     final boolean isMultiSelection;
     private int singleSelection = -1;
     private int[] multiSelection;
 
-    private ArrayList<T> resource = new ArrayList<>();
+    protected ArrayList<T> resource = new ArrayList<T>();
 
     public LevelResources() {
         isMultiSelection = false;

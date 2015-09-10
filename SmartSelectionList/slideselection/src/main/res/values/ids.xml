@@ -3,4 +3,5 @@
     <item name="sssl_list" type="id" />
     <item name="sssl_pageholder" type="id" />
     <item name="sssl_item_checkbox_single" type="id" />
+    <item name="sssl_loading_progress" type="id" />
 </resources>

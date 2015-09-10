@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.hkm.layout.Module.NonSwipe;
+
 import java.util.ArrayList;
 
 /**
@@ -26,10 +28,11 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentP
         this.firstPage = firstPage;
     }
 
-    public void levelForward(H mH) {
+    public void levelForward(NonSwipe pager, H mH) {
         levelObjects.add(mH);
-
         notifyDataSetChanged();
+        int now = pager.getCurrentItem() + 1;
+        pager.setCurrentItem(now, true);
     }
 
     /**
@@ -44,6 +47,7 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentP
     public int getCount() {
         return levels;
     }
+
     protected abstract SimpleSingleList logicBoard(H con);
 
     // Returns the fragment to display for that page

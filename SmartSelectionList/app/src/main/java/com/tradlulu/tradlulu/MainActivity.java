@@ -4,16 +4,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 
+import com.hkm.slideselection.StringLv;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     SimpleStepSelectionFragment thecontroller;
+    StringLv lv0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        thecontroller = (SimpleStepSelectionFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        lv0 = new StringLv(-1);
+        List<String> data = new ArrayList<>();
+        data.add("one1");
+        data.add("one2");
+        data.add("one3");
+        data.add("one4");
+        data.add("one5");
+        data.add("one6");
+        data.add("one7");
+        data.add("one8");
+        data.add("one9");
+        data.add("one10");
+        lv0.setResourceData(data);
+        // thecontroller = (SimpleStepSelectionFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        thecontroller = SimpleStepSelectionFragment.firstLevel(lv0);
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "newA").addToBackStack(null).commit();
     }
 
 
