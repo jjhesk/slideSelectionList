@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by hesk on 10/9/15.
  */
-public class LevelResources<T extends Serializable> {
+public abstract class LevelResources<T extends Serializable> {
     final boolean isMultiSelection;
     private int singleSelection = -1;
     private int[] multiSelection;
@@ -28,6 +28,15 @@ public class LevelResources<T extends Serializable> {
         multiSelection = selections;
     }
 
+    public void setResourceData(T[] h) {
+        resource.clear();
+        final List<T> data = new ArrayList<>();
+        for (int i = 0; i < h.length; i++) {
+            data.add(h[i]);
+        }
+        resource.addAll(data);
+    }
+
     public void setResourceData(List<T> data) {
         resource.clear();
         resource.addAll(data);
@@ -46,7 +55,5 @@ public class LevelResources<T extends Serializable> {
         return multiSelection;
     }
 
-    public T[] getSimpleSource() {
-        return (T[]) resource.toArray();
-    }
+    public abstract T[] getSimpleSource();
 }

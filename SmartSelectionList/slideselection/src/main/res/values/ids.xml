@@ -4,4 +4,8 @@
     <item name="sssl_pageholder" type="id" />
     <item name="sssl_item_checkbox_single" type="id" />
     <item name="sssl_loading_progress" type="id" />
+    <item name="sssl_item_textview" type="id" />
+    <item name="sssl_item_touch" type="id" />
+    <item name="sssl_item_checker" type="id" />
+    <item name="sssl_item_switcher" type="id" />
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="item_single_row_style">
+        <item name="android:layout_marginLeft">@dimen/textview_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/textview_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/textview_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/textview_vertical_margin</item>
+        <item name="android:textSize">@dimen/item_single_text_size</item>
+    </style>
+</resources>

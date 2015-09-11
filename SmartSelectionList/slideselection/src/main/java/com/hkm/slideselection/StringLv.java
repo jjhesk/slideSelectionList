@@ -13,6 +13,8 @@ public class StringLv extends LevelResources<String> {
     }
 
     public String[] getSimpleSource() {
-        return (String[]) resource.toArray();
+        String[] stockArr = new String[resource.size()];
+        stockArr = resource.toArray(stockArr);
+        return stockArr;
     }
 }

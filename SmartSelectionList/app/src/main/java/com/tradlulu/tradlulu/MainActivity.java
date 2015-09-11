@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         lv0.setResourceData(data);
         // thecontroller = (SimpleStepSelectionFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         thecontroller = SimpleStepSelectionFragment.firstLevel(lv0);
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "newA").addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "newA").addToBackStack(null).commit();
     }
 
 
@@ -50,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if (thecontroller != null)
-            thecontroller.onPressBack();
+        if (thecontroller != null) {
+            if (!thecontroller.onPressBack())
+                super.onBackPressed();
+        } else super.onBackPressed();
     }
 }
