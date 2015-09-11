@@ -41,34 +41,34 @@ public class SimpleSingleList extends Fragment {
     private listSelect listener;
 
     public static Bundle stuffs(int selection, String[] list) {
-        final Bundle b = new Bundle();
-        final int[] single_selection = new int[]{selection};
+        Bundle b = new Bundle();
+        int[] single_selection = new int[]{selection};
         b.putIntArray(SELECTION, single_selection);
         b.putStringArray(DATASTRING, list);
         return b;
     }
 
     public static Bundle stuffs(int[] selections, String[] list) {
-        final Bundle b = new Bundle();
+        Bundle b = new Bundle();
         b.putIntArray(SELECTION, selections);
         b.putStringArray(DATASTRING, list);
         return b;
     }
 
     public static SimpleSingleList newInstance(int[] selections, String[] list) {
-        final SimpleSingleList b = new SimpleSingleList();
+        SimpleSingleList b = new SimpleSingleList();
         b.setArguments(stuffs(selections, list));
         return b;
     }
 
     public static SimpleSingleList newInstance(int selections, String[] list) {
-        final SimpleSingleList b = new SimpleSingleList();
+        SimpleSingleList b = new SimpleSingleList();
         b.setArguments(stuffs(selections, list));
         return b;
     }
 
     public static SimpleSingleList newInstance(Bundle args) {
-        final SimpleSingleList list = new SimpleSingleList();
+        SimpleSingleList list = new SimpleSingleList();
         list.setArguments(args);
         return list;
     }
@@ -82,12 +82,6 @@ public class SimpleSingleList extends Fragment {
             this.listener = f.listener;
         }
     }
-
-    public static SimpleSingleList newInstance() {
-        final SimpleSingleList list = new SimpleSingleList();
-        return list;
-    }
-
 
     protected int getListRecyclerView() {
         return R.id.sssl_list;
@@ -128,7 +122,6 @@ public class SimpleSingleList extends Fragment {
             tvtime = (TextView) itemView.findViewById(getTextViewItem());
             if (itemView.findViewById(R.id.sssl_item_touch) != null)
                 click_detection = (View) itemView.findViewById(R.id.sssl_item_touch);
-
         }
     }
 
@@ -210,6 +203,7 @@ public class SimpleSingleList extends Fragment {
                     public void onItemClick(RecyclerView parent, View clickedView, int position) {
                         if (listener != null) {
                             if (clickedView instanceof MaterialRippleLayout) {
+                                // listener.SelectNow(madapter, position);
                             } else listener.SelectNow(madapter, position);
                         }
                     }

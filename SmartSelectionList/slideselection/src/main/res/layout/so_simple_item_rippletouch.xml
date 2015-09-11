@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:mrl_rippleDelayClick="true"
-    app:mrl_rippleFadeDuration="75"
-    app:mrl_rippleInAdapter="true">
+    app:mrl_rippleFadeDuration="75">
 
     <TextView
         android:id="@id/sssl_item_textview"

@@ -13,34 +13,30 @@ import java.util.ArrayList;
  * Created by hesk on 10/9/15.
  */
 public abstract class DynamicAdapter<H extends LevelResources> extends FragmentStatePagerAdapter {
-    private int levels;
+    private int level_current;
     private ArrayList<H> levelObjects = new ArrayList<>();
     protected Fragment firstPage;
     protected H firstPageListConfiguration;
 
     public DynamicAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-        levels = 0;
-        firstPageListConfiguration = null;
+        level_current = 0;
     }
 
     public DynamicAdapter(FragmentManager fragmentManager, Fragment firstPage) {
-        super(fragmentManager);
+        this(fragmentManager);
         this.firstPage = firstPage;
-        levels = 0;
         firstPageListConfiguration = extractBundle();
     }
 
     public DynamicAdapter(FragmentManager fragmentManager, Fragment firstPage, H configuration) {
-        super(fragmentManager);
+        this(fragmentManager);
         this.firstPage = firstPage;
-        levels = 0;
         firstPageListConfiguration = configuration;
     }
 
     public DynamicAdapter(FragmentManager fragmentManager, H configuration) {
-        super(fragmentManager);
-        levels = 0;
+        this(fragmentManager);
         firstPageListConfiguration = configuration;
     }
 
@@ -55,9 +51,9 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
     }
 
     public void levelForward(NonSwipe pager, H mH) {
-        addConfiguration(mH);
         int now = pager.getCurrentItem() + 1;
-        levels++;
+        level_current++;
+        addConfiguration(mH);
         pager.setCurrentItem(now, true);
     }
 
@@ -66,8 +62,8 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
         if (level_step > 0) {
             int back = level_step - 1;
             pager.setCurrentItem(back, true);
+            level_current--;
             takeOutConfiguration();
-            levels--;
             return true;
         } else return false;
     }
@@ -76,7 +72,8 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
     // Returns total number of pages
     @Override
     public int getCount() {
-        return levelObjects.size() + 1;
+        return levelObjects.size() + (firstPageListConfiguration == null ? 0 : 1);
+        // return h;
     }
 
     protected abstract SimpleSingleList logicBoard(H con);
@@ -88,21 +85,25 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
      *
      * @return the type from the level
      */
-    protected abstract H FirstConfiguration();
+    // protected abstract H FirstConfiguration();
 
     // Returns the fragment to display for that page
     @Override
-    public SimpleSingleList getItem(int position) {
-        if (position == 0) {
-            if (firstPageListConfiguration != null) {
-                return logicBoard(firstPageListConfiguration);
-            } else
-                return logicBoard(levelObjects.get(0));
-        } else {
+    public Fragment getItem(final int position) {
+        // return logicBoard(firstPageListConfiguration);
+        if (position > 0) {
             return logicBoard(levelObjects.get(position - 1));
+        } else {
+            // if (firstPage instanceof SimpleSingleList) {
+            //    return (SimpleSingleList) firstPage;
+            //  } else
+            return firstPage;
         }
     }
 
+    public int getCurrentLevel() {
+        return level_current;
+    }
 
     @Override
     public CharSequence getPageTitle(int position) {

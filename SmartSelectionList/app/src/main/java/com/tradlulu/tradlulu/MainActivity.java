@@ -4,13 +4,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 
+import com.hkm.layout.Module.NonSwipe;
+import com.hkm.slideselection.DynamicAdapter;
 import com.hkm.slideselection.StringLv;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
+import com.hkm.slideselection.bridgeChanger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements bridgeChanger {
     SimpleStepSelectionFragment thecontroller;
     StringLv lv0;
 
@@ -19,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lv0 = new StringLv(-1);
-        List<String> data = new ArrayList<>();
+        final List<String> data = new ArrayList<>();
         data.add("one1");
         data.add("one2");
         data.add("one3");
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         // thecontroller = (SimpleStepSelectionFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         thecontroller = SimpleStepSelectionFragment.firstLevel(lv0);
         getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "newA").addToBackStack(null).commit();
+        thecontroller.setCallBackListenerBridge(this);
     }
 
 
@@ -54,5 +58,15 @@ public class MainActivity extends AppCompatActivity {
             if (!thecontroller.onPressBack())
                 super.onBackPressed();
         } else super.onBackPressed();
+    }
+
+    @Override
+    public void SelectNow(NonSwipe pager, DynamicAdapter mAdapter, int selected, int level_now) {
+        StringLv list_end = new StringLv(selected);
+        list_end.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
+        mAdapter.levelForward(pager, list_end);
+        /*  StringLv hb = new StringLv(selected);
+            hb.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
+            adapter.levelForward(mViewPager, hb);*/
     }
 }

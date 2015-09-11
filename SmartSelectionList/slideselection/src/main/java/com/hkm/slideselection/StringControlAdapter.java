@@ -1,18 +1,39 @@
 package com.hkm.slideselection;
 
 import android.app.FragmentManager;
+import android.os.Bundle;
 
 /**
  * Created by hesk on 10/9/15.
  */
 public class StringControlAdapter extends DynamicAdapter<StringLv> {
 
+
     public StringControlAdapter(FragmentManager fragmentManager, StringLv configuration) {
         super(fragmentManager, configuration);
     }
 
+    public StringControlAdapter(FragmentManager fragmentManager, Bundle mfrombundle) {
+        super(fragmentManager);
+        firstPage = SimpleSingleList.newInstance(mfrombundle);
+        firstPageListConfiguration = fromBundle(mfrombundle);
+    }
+
     public StringControlAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
+    }
+
+    public static StringLv fromBundle(Bundle fromData) {
+        int[] selection = fromData.getIntArray(SimpleSingleList.SELECTION);
+        String[] data = fromData.getStringArray(SimpleSingleList.DATASTRING);
+        StringLv lv0;
+        if (selection.length > 1) {
+            lv0 = new StringLv(selection);
+        } else {
+            lv0 = new StringLv(selection[0]);
+        }
+        lv0.setResourceData(data);
+        return lv0;
     }
 
     @Override
@@ -37,11 +58,10 @@ public class StringControlAdapter extends DynamicAdapter<StringLv> {
      *
      * @return the type from the level
      */
-    @Override
+   /* @Override
     protected StringLv FirstConfiguration() {
         return firstPageListConfiguration;
-    }
-
+    }*/
     @Override
     protected SimpleSingleList logicBoard(StringLv con) {
         if (con.isMulti()) {

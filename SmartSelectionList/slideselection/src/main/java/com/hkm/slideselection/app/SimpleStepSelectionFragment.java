@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hkm.layout.Module.NonSwipe;
+import com.hkm.slideselection.DynamicAdapter;
 import com.hkm.slideselection.R;
 import com.hkm.slideselection.SimpleSingleList;
 import com.hkm.slideselection.StringControlAdapter;
 import com.hkm.slideselection.StringLv;
+import com.hkm.slideselection.bridgeChanger;
 import com.hkm.slideselection.listSelect;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
@@ -24,14 +26,20 @@ public class SimpleStepSelectionFragment extends Fragment {
 
     protected NonSwipe mViewPager;
     protected StringControlAdapter adapter;
+    protected bridgeChanger mbridge = new bridgeChanger() {
+
+        @Override
+        public void SelectNow(NonSwipe mpage, DynamicAdapter mAdapter, int selected, int level_now) {
+          /*  StringLv hb = new StringLv(selected);
+            hb.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
+            adapter.levelForward(mViewPager, hb);*/
+        }
+    };
 
     public static SimpleStepSelectionFragment firstLevel(StringLv level) {
         SimpleStepSelectionFragment g = new SimpleStepSelectionFragment();
         try {
-            g.setArguments(SimpleSingleList.stuffs(
-                    level.getSelection(),
-                    level.getSimpleSource()
-            ));
+            g.setArguments(SimpleSingleList.stuffs(level.getSelection(), level.getSimpleSource()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,9 +67,8 @@ public class SimpleStepSelectionFragment extends Fragment {
     public final listSelect listener = new listSelect() {
         @Override
         public void SelectNow(UltimateViewAdapter mAdapter, int selected) {
-            StringLv hb = new StringLv(selected);
-            hb.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
-            adapter.levelForward(mViewPager, hb);
+            int current_level = adapter.getCurrentLevel();
+            mbridge.SelectNow(mViewPager, adapter, selected, current_level);
         }
     };
 
@@ -71,18 +78,10 @@ public class SimpleStepSelectionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mViewPager = (NonSwipe) view.findViewById(getViewPager());
         mViewPager.setOffscreenPageLimit(99);
-        if (getArguments().getStringArray(SimpleSingleList.DATASTRING) != null) {
-            StringLv lv = new StringLv(-1);
-            lv.setResourceData(getArguments().getStringArray(SimpleSingleList.DATASTRING));
-            adapter = new StringControlAdapter(
-                    getChildFragmentManager(), lv
-            );
-        } else
-            adapter = new StringControlAdapter(getChildFragmentManager());
+        adapter = new StringControlAdapter(getChildFragmentManager(), getArguments());
         //=this is not going to work
-
         mViewPager.setAdapter(adapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+     /*      mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -97,8 +96,12 @@ public class SimpleStepSelectionFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
         mViewPager.setCurrentItem(0);
+    }
+
+    public void setCallBackListenerBridge(bridgeChanger mbridge) {
+        this.mbridge = mbridge;
     }
 
     public boolean onPressBack() {
