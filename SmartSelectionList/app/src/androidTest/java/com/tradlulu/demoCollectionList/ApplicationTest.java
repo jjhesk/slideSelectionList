@@ -1,4 +1,4 @@
-package com.tradlulu.tradlulu;
+package com.tradlulu.demoCollectionList;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

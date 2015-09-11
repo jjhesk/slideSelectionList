@@ -33,37 +33,41 @@ import java.util.List;
 public class SimpleSingleList extends Fragment {
     public static final String SELECTION = "selected";
     public static final String DATASTRING = "strings";
+    public static final String LEVEL = "mlevel";
     protected ScrollSmoothLineaerLayoutManager mLayoutManager;
     protected UltimateRecyclerView mRecyclerView;
     protected ProgressBar mProgressBar;
     protected List<String> mList = new ArrayList<>();
     protected ItemTouchListenerAdapter itemTouchListenerAdapter;
     private listSelect listener;
+    private StringLv myLevelConfiguration;
 
-    public static Bundle stuffs(int selection, String[] list) {
+    public static Bundle stuffs(int selection, String[] list, int order) {
         Bundle b = new Bundle();
         int[] single_selection = new int[]{selection};
         b.putIntArray(SELECTION, single_selection);
         b.putStringArray(DATASTRING, list);
+        b.putInt(LEVEL, order);
         return b;
     }
 
-    public static Bundle stuffs(int[] selections, String[] list) {
+    public static Bundle stuffs(int[] selections, String[] list, int order) {
         Bundle b = new Bundle();
         b.putIntArray(SELECTION, selections);
         b.putStringArray(DATASTRING, list);
+        b.putInt(LEVEL, order);
         return b;
     }
 
-    public static SimpleSingleList newInstance(int[] selections, String[] list) {
+    public static SimpleSingleList newInstance(int[] selections, String[] list, int order) {
         SimpleSingleList b = new SimpleSingleList();
-        b.setArguments(stuffs(selections, list));
+        b.setArguments(stuffs(selections, list, order));
         return b;
     }
 
-    public static SimpleSingleList newInstance(int selections, String[] list) {
+    public static SimpleSingleList newInstance(int selections, String[] list, int order) {
         SimpleSingleList b = new SimpleSingleList();
-        b.setArguments(stuffs(selections, list));
+        b.setArguments(stuffs(selections, list, order));
         return b;
     }
 
@@ -80,6 +84,11 @@ public class SimpleSingleList extends Fragment {
         if (getParentFragment() instanceof SimpleStepSelectionFragment) {
             SimpleStepSelectionFragment f = (SimpleStepSelectionFragment) getParentFragment();
             this.listener = f.listener;
+            try {
+                myLevelConfiguration = f.getLevel(getArguments().getInt(LEVEL));
+            } catch (Exception e) {
+                myLevelConfiguration = null;
+            }
         }
     }
 
@@ -180,14 +189,25 @@ public class SimpleSingleList extends Fragment {
         // EBus.getInstance().post(new EBus.ScreenBLK(false));
     }
 
+    private void trigger(final int position, final View view) {
+        if (myLevelConfiguration != null) {
+            myLevelConfiguration.setSelectedAtPos(position);
+        }
+
+        if (listener != null) {
+            if (view != null && view instanceof MaterialRippleLayout) {
+            } else listener.SelectNow(madapter, position);
+        }
+
+    }
+
     protected void onBindHolder(final binder holder, final int position) {
         holder.tvtime.setText(mList.get(position));
         if (holder.click_detection != null && holder.click_detection instanceof MaterialRippleLayout) {
             ((MaterialRippleLayout) holder.click_detection).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null)
-                        listener.SelectNow(madapter, position);
+                    trigger(position, null);
                 }
             });
         }
@@ -201,11 +221,8 @@ public class SimpleSingleList extends Fragment {
                 new ItemTouchListenerAdapter.RecyclerViewOnItemClickListener() {
                     @Override
                     public void onItemClick(RecyclerView parent, View clickedView, int position) {
-                        if (listener != null) {
-                            if (clickedView instanceof MaterialRippleLayout) {
-                                // listener.SelectNow(madapter, position);
-                            } else listener.SelectNow(madapter, position);
-                        }
+
+                        trigger(position, clickedView);
                     }
 
                     @Override
@@ -233,5 +250,11 @@ public class SimpleSingleList extends Fragment {
         mRecyclerView.setAdapter(madapter);
         doneInitialLoading();
     }
+
+
+    public String getItemStringTitle(int position) {
+        return getArguments().getStringArray(DATASTRING)[position];
+    }
+
 
 }

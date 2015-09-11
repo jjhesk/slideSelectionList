@@ -33,6 +33,7 @@ public class StringControlAdapter extends DynamicAdapter<StringLv> {
             lv0 = new StringLv(selection[0]);
         }
         lv0.setResourceData(data);
+        lv0.setOrder(0);
         return lv0;
     }
 
@@ -48,6 +49,7 @@ public class StringControlAdapter extends DynamicAdapter<StringLv> {
                 lv0 = new StringLv(selection[0]);
             }
             lv0.setResourceData(data);
+            lv0.setOrder(0);
             return lv0;
         }
         return null;
@@ -65,9 +67,9 @@ public class StringControlAdapter extends DynamicAdapter<StringLv> {
     @Override
     protected SimpleSingleList logicBoard(StringLv con) {
         if (con.isMulti()) {
-            return SimpleSingleList.newInstance(con.getSelections(), con.getSimpleSource());
+            return SimpleSingleList.newInstance(con.getSelections(), con.getSimpleSource(), getCurrentLevel());
         } else {
-            return SimpleSingleList.newInstance(con.getSelection(), con.getSimpleSource());
+            return SimpleSingleList.newInstance(con.getSelection(), con.getSimpleSource(), getCurrentLevel());
         }
     }
 }

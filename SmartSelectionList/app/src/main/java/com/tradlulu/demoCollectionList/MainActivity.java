@@ -1,5 +1,6 @@
-package com.tradlulu.tradlulu;
+package com.tradlulu.demoCollectionList;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,33 +10,18 @@ import com.hkm.slideselection.DynamicAdapter;
 import com.hkm.slideselection.StringLv;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
 import com.hkm.slideselection.bridgeChanger;
+import com.tradlulu.demoCollectionList.MyList.basicSupport;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements bridgeChanger {
     SimpleStepSelectionFragment thecontroller;
-    StringLv lv0;
+    Handler uiHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lv0 = new StringLv(-1);
-        final List<String> data = new ArrayList<>();
-        data.add("one1");
-        data.add("one2");
-        data.add("one3");
-        data.add("one4");
-        data.add("one5");
-        data.add("one6");
-        data.add("one7");
-        data.add("one8");
-        data.add("one9");
-        data.add("one10");
-        lv0.setResourceData(data);
-        // thecontroller = (SimpleStepSelectionFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-        thecontroller = SimpleStepSelectionFragment.firstLevel(lv0);
+        thecontroller = SimpleStepSelectionFragment.firstLevel(basicSupport.getListMain());
         getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "newA").addToBackStack(null).commit();
         thecontroller.setCallBackListenerBridge(this);
     }
@@ -61,12 +47,16 @@ public class MainActivity extends AppCompatActivity implements bridgeChanger {
     }
 
     @Override
-    public void SelectNow(NonSwipe pager, DynamicAdapter mAdapter, int selected, int level_now) {
-        StringLv list_end = new StringLv(selected);
-        list_end.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
-        mAdapter.levelForward(pager, list_end);
-        /*  StringLv hb = new StringLv(selected);
-            hb.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
-            adapter.levelForward(mViewPager, hb);*/
+    public void SelectNow(final NonSwipe pager, final DynamicAdapter mAdapter, final int selected, final int level_now, String title_selected) {
+
+        uiHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                StringLv list_end = new StringLv(selected);
+                list_end.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
+                mAdapter.levelForward(pager, list_end);
+            }
+        }, 4000);
+
     }
 }

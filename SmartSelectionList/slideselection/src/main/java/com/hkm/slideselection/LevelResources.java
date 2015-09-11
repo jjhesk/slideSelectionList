@@ -11,8 +11,9 @@ public abstract class LevelResources<T extends Serializable> {
     final boolean isMultiSelection;
     private int singleSelection = -1;
     private int[] multiSelection;
-
+    private int setOrder = 0;
     protected ArrayList<T> resource = new ArrayList<T>();
+    private int selectedAtPos;
 
     public LevelResources() {
         isMultiSelection = false;
@@ -26,6 +27,10 @@ public abstract class LevelResources<T extends Serializable> {
     public LevelResources(int[] selections) {
         isMultiSelection = true;
         multiSelection = selections;
+    }
+
+    public void setOrder(int g) {
+        this.setOrder = g;
     }
 
     public void setResourceData(T[] h) {
@@ -56,4 +61,12 @@ public abstract class LevelResources<T extends Serializable> {
     }
 
     public abstract T[] getSimpleSource();
+
+    public void setSelectedAtPos(int selectedAtPos) {
+        if (!isMultiSelection) {
+            this.selectedAtPos = selectedAtPos;
+        } else {
+
+        }
+    }
 }

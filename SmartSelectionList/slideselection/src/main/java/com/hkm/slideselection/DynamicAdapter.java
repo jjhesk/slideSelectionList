@@ -110,4 +110,12 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
         return "level " + position;
     }
 
+    public H getLevelObjectAt(int n) throws Exception {
+        if (levelObjects.size() > 0) {
+            return levelObjects.get(n);
+        } else {
+            throw new Exception("not found in the level object");
+        }
+    }
+
 }

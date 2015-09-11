@@ -29,7 +29,7 @@ public class SimpleStepSelectionFragment extends Fragment {
     protected bridgeChanger mbridge = new bridgeChanger() {
 
         @Override
-        public void SelectNow(NonSwipe mpage, DynamicAdapter mAdapter, int selected, int level_now) {
+        public void SelectNow(NonSwipe mpage, DynamicAdapter mAdapter, int selected, int level_now, String selected_word) {
           /*  StringLv hb = new StringLv(selected);
             hb.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
             adapter.levelForward(mViewPager, hb);*/
@@ -39,7 +39,7 @@ public class SimpleStepSelectionFragment extends Fragment {
     public static SimpleStepSelectionFragment firstLevel(StringLv level) {
         SimpleStepSelectionFragment g = new SimpleStepSelectionFragment();
         try {
-            g.setArguments(SimpleSingleList.stuffs(level.getSelection(), level.getSimpleSource()));
+            g.setArguments(SimpleSingleList.stuffs(level.getSelection(), level.getSimpleSource(), 0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,9 +68,20 @@ public class SimpleStepSelectionFragment extends Fragment {
         @Override
         public void SelectNow(UltimateViewAdapter mAdapter, int selected) {
             int current_level = adapter.getCurrentLevel();
-            mbridge.SelectNow(mViewPager, adapter, selected, current_level);
+            if (adapter.getItem(current_level) instanceof SimpleSingleList) {
+                SimpleSingleList simple1 = (SimpleSingleList) adapter.getItem(current_level);
+                mbridge.SelectNow(mViewPager, adapter, selected, current_level,
+                        simple1.getItemStringTitle(selected));
+            }
+
         }
     };
+
+    public StringLv getLevel(int lv) throws Exception {
+
+        return adapter.getLevelObjectAt(lv);
+
+    }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
