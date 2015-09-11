@@ -36,7 +36,6 @@ public class SimpleSingleList extends Fragment {
     protected ScrollSmoothLineaerLayoutManager mLayoutManager;
     protected UltimateRecyclerView mRecyclerView;
     protected ProgressBar mProgressBar;
-    protected listSelect mChanger;
     protected List<String> mList = new ArrayList<>();
     protected ItemTouchListenerAdapter itemTouchListenerAdapter;
     private listSelect listener;
@@ -53,6 +52,18 @@ public class SimpleSingleList extends Fragment {
         final Bundle b = new Bundle();
         b.putIntArray(SELECTION, selections);
         b.putStringArray(DATASTRING, list);
+        return b;
+    }
+
+    public static SimpleSingleList newInstance(int[] selections, String[] list) {
+        final SimpleSingleList b = new SimpleSingleList();
+        b.setArguments(stuffs(selections, list));
+        return b;
+    }
+
+    public static SimpleSingleList newInstance(int selections, String[] list) {
+        final SimpleSingleList b = new SimpleSingleList();
+        b.setArguments(stuffs(selections, list));
         return b;
     }
 
@@ -110,12 +121,13 @@ public class SimpleSingleList extends Fragment {
 
     public class binder extends UltimateRecyclerviewViewHolder {
         public final TextView tvtime;
-        public final View click_detection;
+        public View click_detection;
 
         public binder(View itemView) {
             super(itemView);
             tvtime = (TextView) itemView.findViewById(getTextViewItem());
-            click_detection = (View) itemView.findViewById(R.id.sssl_item_touch);
+            if (itemView.findViewById(R.id.sssl_item_touch) != null)
+                click_detection = (View) itemView.findViewById(R.id.sssl_item_touch);
 
         }
     }
@@ -175,21 +187,14 @@ public class SimpleSingleList extends Fragment {
         // EBus.getInstance().post(new EBus.ScreenBLK(false));
     }
 
-    //use dragger in here
-    public void setChanger(listSelect mChanger) {
-        this.mChanger = mChanger;
-    }
-
     protected void onBindHolder(final binder holder, final int position) {
         holder.tvtime.setText(mList.get(position));
-        if (holder.click_detection instanceof MaterialRippleLayout) {
-            MaterialRippleLayout m = (MaterialRippleLayout) holder.click_detection;
-            m.setOnClickListener(new View.OnClickListener() {
+        if (holder.click_detection != null && holder.click_detection instanceof MaterialRippleLayout) {
+            ((MaterialRippleLayout) holder.click_detection).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
+                    if (listener != null)
                         listener.SelectNow(madapter, position);
-                    }
                 }
             });
         }

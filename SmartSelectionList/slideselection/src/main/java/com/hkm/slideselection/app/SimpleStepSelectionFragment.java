@@ -62,7 +62,6 @@ public class SimpleStepSelectionFragment extends Fragment {
             StringLv hb = new StringLv(selected);
             hb.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
             adapter.levelForward(mViewPager, hb);
-
         }
     };
 
@@ -73,11 +72,15 @@ public class SimpleStepSelectionFragment extends Fragment {
         mViewPager = (NonSwipe) view.findViewById(getViewPager());
         mViewPager.setOffscreenPageLimit(99);
         if (getArguments().getStringArray(SimpleSingleList.DATASTRING) != null) {
-            adapter = new StringControlAdapter(getChildFragmentManager(),
-                    SimpleSingleList.newInstance(getArguments())
+            StringLv lv = new StringLv(-1);
+            lv.setResourceData(getArguments().getStringArray(SimpleSingleList.DATASTRING));
+            adapter = new StringControlAdapter(
+                    getChildFragmentManager(), lv
             );
         } else
             adapter = new StringControlAdapter(getChildFragmentManager());
+        //=this is not going to work
+
         mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
