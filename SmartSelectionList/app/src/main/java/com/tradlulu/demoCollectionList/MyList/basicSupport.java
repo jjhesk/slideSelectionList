@@ -91,15 +91,15 @@ public class basicSupport {
         final boolean inDaList = inList(name, selection_memory);
         final FilterGroup fgroup = saved_list.product_list.getfacets();
         SelectChoice lv0 = new SelectChoice(false, name);
-        if (name.startsWith(SIZE_LABEL)) {
+        if (name.contains(SIZE_LABEL)) {
             lv0.setResourceData(fgroup.convertToStringList(fgroup.size));
-        } else if (name.startsWith(BRAND_LABEL)) {
+        } else if (name.contains(BRAND_LABEL)) {
             lv0.setResourceData(fgroup.convertToStringList(fgroup.brand));
-        } else if (name.startsWith(CATEGORY_LABEL)) {
+        } else if (name.contains(CATEGORY_LABEL)) {
             lv0.setResourceData(fgroup.convertToStringList(fgroup.category));
-        } else if (name.startsWith(COLOR_LABEL)) {
+        } else if (name.contains(COLOR_LABEL)) {
             lv0.setResourceData(fgroup.convertToStringList(fgroup.color));
-        } else if (name.startsWith(PRICE_LABEL)) {
+        } else if (name.contains(PRICE_LABEL)) {
             lv0.setResourceData(fgroup.convertToStringList(fgroup.priceRange));
         }
         lv0.setOrder(1);

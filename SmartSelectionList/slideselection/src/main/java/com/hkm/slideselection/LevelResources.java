@@ -88,11 +88,11 @@ public abstract class LevelResources<T extends Serializable> {
 
     public void setResourceData(T[] h) {
         resource.clear();
-        final List<T> data = new ArrayList<>();
+        //  final List<T> data = new ArrayList<>();
         for (int i = 0; i < h.length; i++) {
-            data.add(h[i]);
+            resource.add(h[i]);
         }
-        resource.addAll(data);
+        //resource.addAll(data);
     }
 
     public void setResourceData(List<T> data) {
