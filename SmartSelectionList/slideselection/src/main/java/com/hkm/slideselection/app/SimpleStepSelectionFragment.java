@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import com.hkm.slideselection.DynamicAdapter;
 import com.hkm.slideselection.R;
 import com.hkm.slideselection.SimpleSingleList;
 import com.hkm.slideselection.StringControlAdapter;
-import com.hkm.slideselection.StringLv;
+import com.hkm.slideselection.SelectChoice;
 import com.hkm.slideselection.bridgeChanger;
 import com.hkm.slideselection.listSelect;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
@@ -30,13 +29,17 @@ public class SimpleStepSelectionFragment extends Fragment {
 
         @Override
         public void SelectNow(NonSwipe mpage, DynamicAdapter mAdapter, int selected, int level_now, String selected_word) {
-          /*  StringLv hb = new StringLv(selected);
+            /*
+            StringLv hb = new StringLv(selected);
             hb.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
-            adapter.levelForward(mViewPager, hb);*/
+            adapter.levelForward(mViewPager, hb);
+            */
+
+
         }
     };
 
-    public static SimpleStepSelectionFragment firstLevel(StringLv level) {
+    public static SimpleStepSelectionFragment firstLevel(SelectChoice level) {
         SimpleStepSelectionFragment g = new SimpleStepSelectionFragment();
         try {
             g.setArguments(SimpleSingleList.stuffs(level.getSelection(), level.getSimpleSource(), 0));
@@ -63,7 +66,6 @@ public class SimpleStepSelectionFragment extends Fragment {
         return inflater.inflate(getXml(), container, false);
     }
 
-
     public final listSelect listener = new listSelect() {
         @Override
         public void SelectNow(UltimateViewAdapter mAdapter, int selected) {
@@ -73,14 +75,11 @@ public class SimpleStepSelectionFragment extends Fragment {
                 mbridge.SelectNow(mViewPager, adapter, selected, current_level,
                         simple1.getItemStringTitle(selected));
             }
-
         }
     };
 
-    public StringLv getLevel(int lv) throws Exception {
-
+    public SelectChoice getLevel(int lv) throws Exception {
         return adapter.getLevelObjectAt(lv);
-
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)

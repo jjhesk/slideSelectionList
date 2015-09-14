@@ -40,7 +40,7 @@ public class SimpleSingleList extends Fragment {
     protected List<String> mList = new ArrayList<>();
     protected ItemTouchListenerAdapter itemTouchListenerAdapter;
     private listSelect listener;
-    private StringLv myLevelConfiguration;
+    private SelectChoice myLevelConfiguration;
 
     public static Bundle stuffs(int selection, String[] list, int order) {
         Bundle b = new Bundle();
@@ -221,7 +221,6 @@ public class SimpleSingleList extends Fragment {
                 new ItemTouchListenerAdapter.RecyclerViewOnItemClickListener() {
                     @Override
                     public void onItemClick(RecyclerView parent, View clickedView, int position) {
-
                         trigger(position, clickedView);
                     }
 

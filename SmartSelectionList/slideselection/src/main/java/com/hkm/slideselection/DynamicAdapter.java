@@ -105,6 +105,10 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
         return level_current;
     }
 
+    public H getCurrentLVObject() throws Exception {
+        return getLevelObjectAt(level_current - 1);
+    }
+
     @Override
     public CharSequence getPageTitle(int position) {
         return "level " + position;

@@ -10,6 +10,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        multiDexEnabled = true
     }
     buildTypes {
         release {
@@ -32,5 +33,6 @@ dependencies {
     //https://github.com/krimin-killr21/MaterialScrollBar
     compile 'com.turingtechnologies.materialscrollbar:lib:3.0.1'
     compile project(':slideselection')
-    compile 'com.jakewharton:butterknife:5.1.1'
+    compile project(':hbsdk')
+    //compile 'com.jakewharton:butterknife:5.1.1'
 }

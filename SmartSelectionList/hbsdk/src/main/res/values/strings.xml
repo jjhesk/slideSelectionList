@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">HBSDK</string>
+    <string name="price_tag_format_usd">$ %d USD</string>
+    <string name="label_lastone">(Last One Left)</string>
+    <string name="label_outofstock">(Out of Stock)</string>
+    <string name="workingprogress">Authorization Checking ...</string>
+    <string name="donesuccess">Finish</string>
+    <string name="understand">understood</string>
+    <string name="failurelogin">Login Unsuccessful</string>
+</resources>

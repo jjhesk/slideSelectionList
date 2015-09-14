@@ -32,10 +32,9 @@
         </activity>
         <activity
             android:name="com.tradlulu.demoCollectionList.MainActivity"
-            android:label="@string/title_activity_maps">
-
-        </activity>
-        <activity android:name="com.tradlulu.demoCollectionList.FancyList">
+            android:label="@string/title_activity_maps" />
+        <activity android:name="com.tradlulu.demoCollectionList.FancyList" />
+        <activity android:name="com.tradlulu.demoCollectionList.AppliedHBFilter">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

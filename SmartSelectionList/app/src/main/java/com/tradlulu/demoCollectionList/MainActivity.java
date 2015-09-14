@@ -7,7 +7,7 @@ import android.view.Menu;
 
 import com.hkm.layout.Module.NonSwipe;
 import com.hkm.slideselection.DynamicAdapter;
-import com.hkm.slideselection.StringLv;
+import com.hkm.slideselection.SelectChoice;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
 import com.hkm.slideselection.bridgeChanger;
 import com.tradlulu.demoCollectionList.MyList.basicSupport;
@@ -21,18 +21,11 @@ public class MainActivity extends AppCompatActivity implements bridgeChanger {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        thecontroller = SimpleStepSelectionFragment.firstLevel(basicSupport.getListMain());
+        thecontroller = SimpleStepSelectionFragment.firstLevel(basicSupport.DemoData());
         getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "newA").addToBackStack(null).commit();
         thecontroller.setCallBackListenerBridge(this);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
     /**
      * Take care of popping the fragment back stack or finishing the activity
@@ -52,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements bridgeChanger {
         uiHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                StringLv list_end = new StringLv(selected);
+                SelectChoice list_end = new SelectChoice(selected);
                 list_end.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
                 mAdapter.levelForward(pager, list_end);
             }

@@ -1,1 +1,1 @@
-include ':app', ':slideselection', ":LayoutCollections"
+include ':app', ':slideselection', ":LayoutCollections", ":hbsdk"

@@ -2,7 +2,6 @@ package com.tradlulu.demoCollectionList;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.BinderThread;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.internal.widget.TintImageView;
 import android.view.View;
@@ -11,42 +10,35 @@ import android.widget.TextView;
 
 import com.hkm.layout.Module.NonSwipe;
 import com.hkm.slideselection.DynamicAdapter;
-import com.hkm.slideselection.StringLv;
+import com.hkm.slideselection.SelectChoice;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
 import com.hkm.slideselection.bridgeChanger;
 import com.tradlulu.demoCollectionList.MyList.basicSupport;
 
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.ButterKnife;
+import java.util.Iterator;
 
 /**
  * Created by hesk on 11/9/15.
  */
 public class FancyList extends AppCompatActivity implements bridgeChanger {
     private SimpleStepSelectionFragment thecontroller;
-    private StringLv lv0;
+    private SelectChoice lv0;
     private Handler uiHandler = new Handler();
     private TintImageView back;
     private ProgressBar mProgress;
     private TextView title_navigation;
     private boolean isInProgress = false;
-/*
-    @Bind(R.id.back_level)
-    TintImageView back;
-
-    @Bind(R.id.ui_loading_progress_bar_xx)
-    ProgressBar mProgress;
-*/
+    private ArrayList<SelectChoice> selection_memory = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //ButterKnife.bind(this);
         setContentView(R.layout.fancy_1);
-        thecontroller = SimpleStepSelectionFragment.firstLevel(basicSupport.getListMain());
+        thecontroller = SimpleStepSelectionFragment.firstLevel(basicSupport.DemoData());
         bindothers();
         getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "newA").addToBackStack(null).commit();
         thecontroller.setCallBackListenerBridge(this);
@@ -93,22 +85,60 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
         } else super.onBackPressed();
     }
 
-    @Override
-    public void SelectNow(final NonSwipe pager, final DynamicAdapter mAdapter, final int selected, final int level_now, final String eles) {
-        if (!isInProgress) {
-            inProgress();
-            title_navigation.setText(eles);
-            uiHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    StringLv list_end = new StringLv(selected);
-                    list_end.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
-                    mAdapter.levelForward(pager, list_end);
-                    inProgressDone();
-                }
-            }, 800);
+    private boolean inList(String selected) {
+        Iterator<SelectChoice> io = selection_memory.iterator();
+        while (io.hasNext()) {
+            SelectChoice mSelect = io.next();
+            if (mSelect.isTag(selected)) {
+                return true;
+            }
         }
+        return false;
+    }
 
+    private void getlist(final String selected, final NonSwipe pager, final DynamicAdapter mAdapter) {
+        Iterator<SelectChoice> io = selection_memory.iterator();
+        while (io.hasNext()) {
+            SelectChoice mSelect = io.next();
+            if (mSelect.isTag(selected)) {
+                mAdapter.levelForward(pager, mSelect);
+                inProgressDone();
+                return;
+            }
+        }
+        /**
+         * mock run async
+         */
+        uiHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SelectChoice list_end = new SelectChoice(false, selected);
+                list_end.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
+                mAdapter.levelForward(pager, list_end);
+                inProgressDone();
+            }
+        }, 800);
+
+    }
+
+    @Override
+    public void SelectNow(final NonSwipe pager, final DynamicAdapter mAdapter, final int selected, final int level_now, final String selected_string) {
+        if (!isInProgress) {
+            if (level_now == 1) {
+                if(!inList(selected_string)){
+                    try {
+                        selection_memory.add((SelectChoice) mAdapter.getCurrentLVObject());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                mAdapter.levelBack(pager);
+            } else {
+                inProgress();
+                title_navigation.setText(selected_string);
+                getlist(selected_string, pager, mAdapter);
+            }
+        }
     }
 
 

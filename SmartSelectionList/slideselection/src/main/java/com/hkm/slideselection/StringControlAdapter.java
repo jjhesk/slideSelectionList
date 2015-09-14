@@ -6,10 +6,10 @@ import android.os.Bundle;
 /**
  * Created by hesk on 10/9/15.
  */
-public class StringControlAdapter extends DynamicAdapter<StringLv> {
+public class StringControlAdapter extends DynamicAdapter<SelectChoice> {
 
 
-    public StringControlAdapter(FragmentManager fragmentManager, StringLv configuration) {
+    public StringControlAdapter(FragmentManager fragmentManager, SelectChoice configuration) {
         super(fragmentManager, configuration);
     }
 
@@ -23,14 +23,14 @@ public class StringControlAdapter extends DynamicAdapter<StringLv> {
         super(fragmentManager);
     }
 
-    public static StringLv fromBundle(Bundle fromData) {
+    public static SelectChoice fromBundle(Bundle fromData) {
         int[] selection = fromData.getIntArray(SimpleSingleList.SELECTION);
         String[] data = fromData.getStringArray(SimpleSingleList.DATASTRING);
-        StringLv lv0;
+        SelectChoice lv0;
         if (selection.length > 1) {
-            lv0 = new StringLv(selection);
+            lv0 = new SelectChoice(selection);
         } else {
-            lv0 = new StringLv(selection[0]);
+            lv0 = new SelectChoice(selection[0]);
         }
         lv0.setResourceData(data);
         lv0.setOrder(0);
@@ -38,15 +38,15 @@ public class StringControlAdapter extends DynamicAdapter<StringLv> {
     }
 
     @Override
-    public StringLv extractBundle() {
+    public SelectChoice extractBundle() {
         if (firstPage != null && firstPage.getArguments() != null) {
             int[] selection = firstPage.getArguments().getIntArray(SimpleSingleList.SELECTION);
             String[] data = firstPage.getArguments().getStringArray(SimpleSingleList.DATASTRING);
-            StringLv lv0;
+            SelectChoice lv0;
             if (selection.length > 1) {
-                lv0 = new StringLv(selection);
+                lv0 = new SelectChoice(selection);
             } else {
-                lv0 = new StringLv(selection[0]);
+                lv0 = new SelectChoice(selection[0]);
             }
             lv0.setResourceData(data);
             lv0.setOrder(0);
@@ -65,7 +65,7 @@ public class StringControlAdapter extends DynamicAdapter<StringLv> {
         return firstPageListConfiguration;
     }*/
     @Override
-    protected SimpleSingleList logicBoard(StringLv con) {
+    protected SimpleSingleList logicBoard(SelectChoice con) {
         if (con.isMulti()) {
             return SimpleSingleList.newInstance(con.getSelections(), con.getSimpleSource(), getCurrentLevel());
         } else {
