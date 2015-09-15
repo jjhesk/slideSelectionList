@@ -2,21 +2,10 @@ package com.hkm.slideselection;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v13.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.view.ViewGroup;
-
-
 import com.hkm.layout.Module.NonSwipe;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
 
 /**
@@ -55,6 +44,13 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
     protected void addConfiguration(H FConfiguration) {
         levelObjects.add(FConfiguration);
         notifyDataSetChanged();
+    }
+
+    public void setCurrentSelectionNotify(int which_item) {
+        if (levelObjects.size() >= 1) {
+            H b = levelObjects.get(level_current - 1);
+            b.setSelectedAtPos(which_item);
+        }
     }
 
     protected void takeOutConfiguration() {

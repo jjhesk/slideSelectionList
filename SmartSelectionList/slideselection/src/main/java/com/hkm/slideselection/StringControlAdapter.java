@@ -32,7 +32,7 @@ public class StringControlAdapter extends DynamicAdapter<SelectChoice> {
             lv0 = new SelectChoice(selection[0]);
         }
         lv0.setResourceData(data);
-        lv0.setOrder(0);
+        lv0.setLevel(0);
         return lv0;
     }
 
@@ -48,7 +48,7 @@ public class StringControlAdapter extends DynamicAdapter<SelectChoice> {
                 lv0 = new SelectChoice(selection[0]);
             }
             lv0.setResourceData(data);
-            lv0.setOrder(0);
+            lv0.setLevel(0);
             return lv0;
         }
         return null;

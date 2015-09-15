@@ -1,6 +1,7 @@
 package com.hkm.slideselection.app;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,29 +16,34 @@ import com.hkm.slideselection.SimpleSingleList;
 import com.hkm.slideselection.StringControlAdapter;
 import com.hkm.slideselection.SelectChoice;
 import com.hkm.slideselection.bridgeChanger;
-import com.hkm.slideselection.listSelect;
-import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class SimpleStepSelectionFragment extends Fragment {
-
+    protected Bus mBus;
     protected NonSwipe mViewPager;
     protected StringControlAdapter adapter;
     protected bridgeChanger mbridge = new bridgeChanger() {
 
         @Override
-        public void SelectNow(NonSwipe mpage, DynamicAdapter mAdapter, int selected, int level_now, String selected_word) {
-            /*
-            StringLv hb = new StringLv(selected);
-            hb.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
-            adapter.levelForward(mViewPager, hb);
-            */
-
-
+        public void SelectNow(NonSwipe mpage, DynamicAdapter mAdapter, SelectChoice mChoice) {
         }
     };
+
+    /**
+     * Called when a fragment is first attached to its activity.
+     * {@link #onCreate(Bundle)} will be called after this.
+     *
+     * @param activity
+     */
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mBus = new Bus();
+    }
 
     public static SimpleStepSelectionFragment firstLevel(SelectChoice level) {
         SimpleStepSelectionFragment g = new SimpleStepSelectionFragment();
@@ -61,22 +67,11 @@ public class SimpleStepSelectionFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(getXml(), container, false);
     }
-
-    public final listSelect listener = new listSelect() {
-        @Override
-        public void SelectNow(UltimateViewAdapter mAdapter, int selected) {
-            int current_level = adapter.getCurrentLevel();
-            if (adapter.getItem(current_level) instanceof SimpleSingleList) {
-                SimpleSingleList simple1 = (SimpleSingleList) adapter.getItem(current_level);
-                mbridge.SelectNow(mViewPager, adapter, selected, current_level,
-                        simple1.getItemStringTitle(selected));
-            }
-        }
-    };
 
     public SelectChoice getLevel(int lv) throws Exception {
         return adapter.getLevelObjectAt(lv);
@@ -91,7 +86,7 @@ public class SimpleStepSelectionFragment extends Fragment {
         adapter = new StringControlAdapter(getChildFragmentManager(), getArguments());
         //=this is not going to work
         mViewPager.setAdapter(adapter);
-     /*      mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+         /*      mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -116,5 +111,30 @@ public class SimpleStepSelectionFragment extends Fragment {
 
     public boolean onPressBack() {
         return adapter.levelBack(mViewPager);
+    }
+
+    @Subscribe
+    public void onEvent(SelectChoice event_choice) {
+        mbridge.SelectNow(
+                mViewPager,
+                adapter,
+                event_choice);
+    }
+
+    public Bus getBusInstance() {
+        return mBus;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mBus.register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBus.unregister(this);
     }
 }

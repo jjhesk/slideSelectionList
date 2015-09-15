@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.internal.widget.TintImageView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,10 +16,10 @@ import com.hkm.slideselection.app.SimpleStepSelectionFragment;
 import com.hkm.slideselection.bridgeChanger;
 import com.hypebeast.sdk.api.exception.ApiException;
 import com.hypebeast.sdk.api.model.hypebeaststore.ReponseNormal;
-import com.hypebeast.sdk.api.model.hypebeaststore.ResponseProductList;
 import com.hypebeast.sdk.api.resources.hbstore.Products;
+import com.hypebeast.sdk.application.hbx.FilterApplication;
 import com.hypebeast.sdk.clients.HBStoreApiClient;
-import com.tradlulu.demoCollectionList.MyList.basicSupport;
+import com.tradlulu.demoCollectionList.MyList.hbSuport;
 
 
 import java.util.ArrayList;
@@ -50,11 +51,14 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
     public void success(ReponseNormal responseProductList, Response response) {
         latest_response = responseProductList;
         if (initialize) {
-            thecontroller = SimpleStepSelectionFragment.firstLevel(basicSupport.byReturnJson(responseProductList));
+            thecontroller = SimpleStepSelectionFragment.firstLevel(hbSuport.byReturnJson(responseProductList));
             bindothers();
             getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "TagSliderMain").addToBackStack(null).commit();
             thecontroller.setCallBackListenerBridge(this);
             inProgressDone();
+        }
+        if (level == 1) {
+
         }
 
     }
@@ -65,38 +69,41 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
     }
 
     @Override
-    public void SelectNow(NonSwipe pager, DynamicAdapter mAdapter, int selected, int level_now, String selected_word) {
-
-        if (!isInProgress) {
-            if (level_now == 1) {
-                Iterator<SelectChoice> io = selection_memory.iterator();
-                while (io.hasNext()) {
-                    SelectChoice mSelect = io.next();
-                    if (mSelect.isTag(selected_word)) {
-                        basicSupport.check_preapply_filter(selection_memory.iterator(), this);
-
-
-
-                        return;
-                    }
-                }
-
-
-                try {
-                    selection_memory.add((SelectChoice) mAdapter.getCurrentLVObject());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                // mAdapter.levelBack(pager);
-            } else {
+    public void SelectNow(NonSwipe pager, DynamicAdapter mAdapter, SelectChoice the_choice) {
+        try {
+            level = the_choice.getLevel();
+            if (!isInProgress) {
                 inProgress();
-                title_navigation.setText(selected_word);
-                mAdapter.levelForward(pager, basicSupport.fromFirstColumn(selection_memory, latest_response, selected_word));
-                inProgressDone();
-            }
-        }
+                if (level == 1) {
+                    selection_memory.add((SelectChoice) mAdapter.getCurrentLVObject());
+                    FilterApplication filter = FilterApplication.newFilter();
+                    Iterator<SelectChoice> io = selection_memory.iterator();
+                    while (io.hasNext()) {
+                        hbSuport.check_preapply_filter(filter, io.next());
+                    }
+                    String json = filter.getJson();
+                    Log.d("check_f_result", json);
+                    products_interface.bysubcate("accessories", "socks", json, this);
+                    // mAdapter.levelBack(pager);
+                    return;
+                } else {
 
+                    title_navigation.setText(the_choice.selected_string());
+                    mAdapter.levelForward(
+                            pager,
+                            hbSuport.fromFirstColumn(selection_memory, latest_response, the_choice.selected_string()));
+
+                    inProgressDone();
+                    return;
+                }
+            }
+        } catch (ApiException e) {
+            e.printStackTrace();
+            Log.d("check_f_result", e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("check_f_result", e.getMessage());
+        }
 
     }
 
@@ -108,7 +115,7 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
         setContentView(R.layout.fancy_1);
         try {
             initialize = true;
-            products_interface.bycate("accessories", "socks", this);
+            products_interface.bysubcate("accessories", "socks", this);
         } catch (ApiException e) {
             e.printStackTrace();
         }

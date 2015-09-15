@@ -22,52 +22,103 @@ public interface Products {
 
     @GET("/categories/{catename}")
     void bycate(
-            final @Path("catename") String category_name, final Callback<ReponseNormal> result) throws ApiException;
+            final @Path("catename") String category_name,
+            final Callback<ReponseNormal> result) throws ApiException;
 
+    @GET("/categories/{catename}")
+    void bycate(
+            final @Path("catename") String category_name,
+            final @Query("filter") String json,
+            final Callback<ReponseNormal> result) throws ApiException;
+
+    @GET("/categories/{catename}")
+    void bycate(
+            final @Path("catename") String category_name,
+            final @Query("page") int page_num,
+            final @Query("limit") int limit,
+            final Callback<ReponseNormal> result) throws ApiException;
+
+    @GET("/categories/{catename}")
+    void bycate(
+            final @Path("catename") String category_name,
+            final @Query("filter") String json,
+            final @Query("page") int page_num,
+            final @Query("limit") int limit,
+            final Callback<ReponseNormal> result) throws ApiException;
+
+    @GET("/categories/{catename}")
+    void bycate(
+            final @Path("catename") String category_name,
+            final @Query("page") int page_num,
+            final Callback<ReponseNormal> result) throws ApiException;
+
+    @GET("/categories/{catename}")
+    void bycate(
+            final @Path("catename") String category_name,
+            final @Query("filter") String json,
+            final @Query("page") int page_num,
+            final Callback<ReponseNormal> result) throws ApiException;
 
     @GET("/categories/{catename}/{subcate}")
-    void bycate(
+    void bysubcate(
             final @Path("catename") String category_name,
             final @Path("subcate") String subcate,
             final Callback<ReponseNormal> result) throws ApiException;
 
-
-    @GET("/categories/{catename}")
-    void bycate(
-            final @Path("catename") String category_name,
-            final @Query("page") int page_num, final Callback<ReponseNormal> result) throws ApiException;
-
-
     @GET("/categories/{catename}/{subcate}")
-    void bycate(
+    void bysubcate(
             final @Path("catename") String category_name,
             final @Path("subcate") String subcate,
-            final @Query("page") int page_num, final Callback<ReponseNormal> result) throws ApiException;
-
-    @GET("/categories/{catename}")
-    void bycate(
-            final @Path("catename") String category_name,
-            final @Query("page") int page_num,
-            final @Query("limit") int limit, final Callback<ReponseNormal> result) throws ApiException;
+            final @Query("filter") String json,
+            final Callback<ReponseNormal> result) throws ApiException;
 
     @GET("/categories/{catename}/{subcate}")
-    void bycate(
+    void bysubcate(
             final @Path("catename") String category_name,
             final @Path("subcate") String subcate,
             final @Query("page") int page_num,
-            final @Query("limit") int limit, final Callback<ReponseNormal> result) throws ApiException;
+            final Callback<ReponseNormal> result) throws ApiException;
 
-    @GET("/search")
-    void search(final @Query("q") String keyword, final Callback<ReponseNormal> result) throws ApiException;
+    @GET("/categories/{catename}/{subcate}")
+    void bysubcate(
+            final @Path("catename") String category_name,
+            final @Path("subcate") String subcate,
+            final @Query("filter") String json,
+            final @Query("page") int page_num,
+            final Callback<ReponseNormal> result) throws ApiException;
+
+
+    @GET("/categories/{catename}/{subcate}")
+    void bysubcate(
+            final @Path("catename") String category_name,
+            final @Path("subcate") String subcate,
+            final @Query("page") int page_num,
+            final @Query("limit") int limit,
+            final Callback<ReponseNormal> result) throws ApiException;
+
+    @GET("/categories/{catename}/{subcate}")
+    void bysubcate(
+            final @Path("catename") String category_name,
+            final @Path("subcate") String subcate,
+            final @Query("filter") String json,
+            final @Query("page") int page_num,
+            final @Query("limit") int limit,
+            final Callback<ReponseNormal> result) throws ApiException;
 
     @GET("/search")
     void search(final @Query("q") String keyword,
-                final @Query("page") int page_num, final Callback<ReponseNormal> result) throws ApiException;
+                final Callback<ReponseNormal> result) throws ApiException;
 
     @GET("/search")
     void search(final @Query("q") String keyword,
                 final @Query("page") int page_num,
-                final @Query("limit") int limit, final Callback<ReponseNormal> result) throws ApiException;
+                final Callback<ReponseNormal> result) throws ApiException;
+
+    @GET("/search")
+    void search(final @Query("q") String keyword,
+                final @Query("page") int page_num,
+                final @Query("limit") int limit,
+                final Callback<ReponseNormal> result) throws ApiException;
 
 
     @GET("/{special_item}")

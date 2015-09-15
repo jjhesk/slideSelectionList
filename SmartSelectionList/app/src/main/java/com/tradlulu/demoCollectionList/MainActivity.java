@@ -40,14 +40,14 @@ public class MainActivity extends AppCompatActivity implements bridgeChanger {
     }
 
     @Override
-    public void SelectNow(final NonSwipe pager, final DynamicAdapter mAdapter, final int selected, final int level_now, String title_selected) {
+    public void SelectNow(final NonSwipe pager, final DynamicAdapter mAdapter, final SelectChoice choice) {
 
         uiHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                SelectChoice list_end = new SelectChoice(selected);
-                list_end.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
-                mAdapter.levelForward(pager, list_end);
+                //  SelectChoice list_end = new SelectChoice(selected);
+                choice.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
+                mAdapter.levelForward(pager, choice);
             }
         }, 4000);
 

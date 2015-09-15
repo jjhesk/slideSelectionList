@@ -23,6 +23,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.marshalchen.ultimaterecyclerview.uiUtils.ScrollSmoothLineaerLayoutManager;
+import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,8 @@ public class SimpleSingleList extends Fragment {
     protected ProgressBar mProgressBar;
     protected List<String> mList = new ArrayList<>();
     protected ItemTouchListenerAdapter itemTouchListenerAdapter;
-    private listSelect listener;
     private SelectChoice myLevelConfiguration;
+    private Bus mBus;
 
     public static Bundle stuffs(int selection, String[] list, int order) {
         Bundle b = new Bundle();
@@ -81,14 +82,16 @@ public class SimpleSingleList extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (getParentFragment() instanceof SimpleStepSelectionFragment) {
-            SimpleStepSelectionFragment f = (SimpleStepSelectionFragment) getParentFragment();
-            this.listener = f.listener;
-            try {
+        try {
+            if (getParentFragment() instanceof SimpleStepSelectionFragment) {
+                SimpleStepSelectionFragment f = (SimpleStepSelectionFragment) getParentFragment();
+                // this.listener = f.listener;
+                mBus = f.getBusInstance();
                 myLevelConfiguration = f.getLevel(getArguments().getInt(LEVEL));
-            } catch (Exception e) {
-                myLevelConfiguration = null;
             }
+        } catch (Exception e) {
+            myLevelConfiguration = null;
+            Log.d("noconfig", "noconfig");
         }
     }
 
@@ -185,20 +188,13 @@ public class SimpleSingleList extends Fragment {
                 mProgressBar.setVisibility(View.GONE);
             }
         });
-        // mRecyclerView.setRefreshing(false);
-        // EBus.getInstance().post(new EBus.ScreenBLK(false));
     }
 
-    private void trigger(final int position, final View view) {
+    private void makeSelection(int position) {
         if (myLevelConfiguration != null) {
             myLevelConfiguration.setSelectedAtPos(position);
+            mBus.post(myLevelConfiguration);
         }
-
-        if (listener != null) {
-            if (view != null && view instanceof MaterialRippleLayout) {
-            } else listener.SelectNow(madapter, position);
-        }
-
     }
 
     protected void onBindHolder(final binder holder, final int position) {
@@ -207,7 +203,7 @@ public class SimpleSingleList extends Fragment {
             ((MaterialRippleLayout) holder.click_detection).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    trigger(position, null);
+                    makeSelection(position);
                 }
             });
         }
@@ -221,7 +217,9 @@ public class SimpleSingleList extends Fragment {
                 new ItemTouchListenerAdapter.RecyclerViewOnItemClickListener() {
                     @Override
                     public void onItemClick(RecyclerView parent, View clickedView, int position) {
-                        trigger(position, clickedView);
+                        if (clickedView != null && clickedView instanceof MaterialRippleLayout) {
+
+                        } else makeSelection(position);
                     }
 
                     @Override

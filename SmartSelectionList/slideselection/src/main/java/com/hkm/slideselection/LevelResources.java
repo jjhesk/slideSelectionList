@@ -11,7 +11,7 @@ public abstract class LevelResources<T extends Serializable> {
     public final boolean isMultiSelection;
     private int singleSelection = -1;
     private int[] multiSelection;
-    private int setOrder = 0;
+    private int level_list = 0;
     protected ArrayList<T> resource = new ArrayList<T>();
     private int selectedAtPos;
     private String tag;
@@ -77,13 +77,21 @@ public abstract class LevelResources<T extends Serializable> {
         return tag == null ? false : name.equalsIgnoreCase(tag);
     }
 
+    public String getTag() {
+        return tag;
+    }
+
     /**
      * the level number
      *
      * @param g the number supposed to show the level
      */
-    public void setOrder(int g) {
-        this.setOrder = g;
+    public void setLevel(int g) {
+        this.level_list = g;
+    }
+
+    public int getLevel() {
+        return level_list;
     }
 
     public void setResourceData(T[] h) {

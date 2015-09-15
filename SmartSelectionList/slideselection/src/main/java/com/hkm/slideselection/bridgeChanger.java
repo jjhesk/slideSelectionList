@@ -9,7 +9,5 @@ public interface bridgeChanger {
     void SelectNow(
             final NonSwipe pager,
             final DynamicAdapter mAdapter,
-            final int selected,
-            final int level_now,
-            final String selected_word);
+            final SelectChoice choice);
 }

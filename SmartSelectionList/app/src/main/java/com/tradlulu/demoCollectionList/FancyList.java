@@ -122,10 +122,10 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
     }
 
     @Override
-    public void SelectNow(final NonSwipe pager, final DynamicAdapter mAdapter, final int selected, final int level_now, final String selected_string) {
+    public void SelectNow(final NonSwipe pager, final DynamicAdapter mAdapter, SelectChoice choice) {
         if (!isInProgress) {
-            if (level_now == 1) {
-                if(!inList(selected_string)){
+            if (choice.getLevel() == 1) {
+                if (!inList(choice.selected_string())) {
                     try {
                         selection_memory.add((SelectChoice) mAdapter.getCurrentLVObject());
                     } catch (Exception e) {
@@ -135,8 +135,8 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
                 mAdapter.levelBack(pager);
             } else {
                 inProgress();
-                title_navigation.setText(selected_string);
-                getlist(selected_string, pager, mAdapter);
+                title_navigation.setText(choice.selected_string());
+                getlist(choice.selected_string(), pager, mAdapter);
             }
         }
     }
