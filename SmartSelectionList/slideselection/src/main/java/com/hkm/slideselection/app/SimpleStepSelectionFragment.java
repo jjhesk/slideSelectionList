@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hkm.layout.Module.NonSwipe;
 import com.hkm.slideselection.DynamicAdapter;
+import com.hkm.slideselection.MessageEvent;
 import com.hkm.slideselection.R;
 import com.hkm.slideselection.SimpleSingleList;
 import com.hkm.slideselection.StringControlAdapter;
@@ -19,18 +19,19 @@ import com.hkm.slideselection.bridgeChanger;
 import com.hkm.slideselection.simpleBridge;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.squareup.otto.ThreadEnforcer;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class SimpleStepSelectionFragment extends Fragment {
-    protected Bus mBus;
-    protected NonSwipe mViewPager;
+    protected static Bus mBus;
+    protected ViewPagerHolder mViewPager;
     protected StringControlAdapter adapter;
     protected bridgeChanger mbridge = new simpleBridge() {
 
         @Override
-        public void SelectNow(NonSwipe mpage, DynamicAdapter mAdapter, SelectChoice mChoice) {
+        public void SelectNow(ViewPagerHolder mpage, DynamicAdapter mAdapter, SelectChoice mChoice) {
         }
     };
 
@@ -43,7 +44,8 @@ public class SimpleStepSelectionFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mBus = new Bus();
+        if (mBus == null)
+            mBus = new Bus("fragmentcontrol");
     }
 
     public static SimpleStepSelectionFragment firstLevel(SelectChoice level) {
@@ -83,12 +85,12 @@ public class SimpleStepSelectionFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewPager = (NonSwipe) view.findViewById(getViewPager());
+        mViewPager = (ViewPagerHolder) view.findViewById(getViewPager());
         mViewPager.setOffscreenPageLimit(99);
         adapter = new StringControlAdapter(getChildFragmentManager(), getArguments());
         //=this is not going to work
         mViewPager.setAdapter(adapter);
-         /*
+        /*
             mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -125,8 +127,11 @@ public class SimpleStepSelectionFragment extends Fragment {
     }
 
     @Subscribe
-    public void onEvent(int event_integer) {
-        mbridge.HomeSelect(mViewPager, adapter, event_integer);
+    public void onEvent(MessageEvent event_integer) {
+        mbridge.HomeSelect(
+                mViewPager,
+                adapter,
+                event_integer.At());
     }
 
     public Bus getBusInstance() {
@@ -136,13 +141,13 @@ public class SimpleStepSelectionFragment extends Fragment {
 
     @Override
     public void onStart() {
+        mBus.register(SimpleStepSelectionFragment.this);
         super.onStart();
-        mBus.register(this);
     }
 
     @Override
     public void onStop() {
+        mBus.unregister(SimpleStepSelectionFragment.this);
         super.onStop();
-        mBus.unregister(this);
     }
 }

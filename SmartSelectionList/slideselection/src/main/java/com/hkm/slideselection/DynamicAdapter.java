@@ -5,7 +5,9 @@ import android.app.FragmentManager;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v13.app.FragmentStatePagerAdapter;
-import com.hkm.layout.Module.NonSwipe;
+
+import com.hkm.slideselection.app.ViewPagerHolder;
+
 import java.util.ArrayList;
 
 /**
@@ -57,14 +59,14 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
         }, 800);
     }
 
-    public void levelForward(NonSwipe pager, H mH) {
+    public void levelForward(ViewPagerHolder pager, H mH) {
         int now = pager.getCurrentItem() + 1;
         level_current++;
         addConfiguration(mH);
         pager.setCurrentItem(now, true);
     }
 
-    public boolean levelBack(NonSwipe pager) {
+    public boolean levelBack(ViewPagerHolder pager) {
         int level_step = pager.getCurrentItem();
         if (level_step > 0) {
             int back = level_step - 1;
@@ -167,6 +169,9 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
         views = new ArrayList<SimpleSingleList>();
     }
 
+    public void updateFirstConfiguration(H choice) {
+        firstPageListConfiguration = choice;
+    }
 
     /**
      * tells if the first page is just a normal page or not
@@ -183,7 +188,10 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
             H loca = levelObjects.get(position - 1);
             return createList(loca);
         } else {
-            return firstPage;
+            if (firstPageListConfiguration != null)
+                return createList(firstPageListConfiguration);
+            else
+                return firstPage;
         }
     }
 
@@ -194,5 +202,6 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
     public H getCurrentLVObject() throws Exception {
         return getLevelObjectAt(level_current - 1);
     }
+
 
 }

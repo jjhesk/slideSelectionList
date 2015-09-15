@@ -1,11 +1,10 @@
 package com.tradlulu.demoCollectionList.MyList;
 
-import com.hkm.layout.Module.NonSwipe;
 import com.hkm.slideselection.DynamicAdapter;
 import com.hkm.slideselection.SelectChoice;
+import com.hkm.slideselection.app.ViewPagerHolder;
 import com.hypebeast.sdk.api.model.hypebeaststore.ReponseNormal;
 import com.hypebeast.sdk.api.model.symfony.FilterGroup;
-import com.hypebeast.sdk.api.resources.hbstore.Products;
 import com.hypebeast.sdk.application.hbx.FilterApplication;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class hbSuport {
 
     public static SelectChoice byReturnJson(ReponseNormal firstJson) {
         SelectChoice lv0 = new SelectChoice(false);
-        final List<String> data = new ArrayList<>();
+        final List<String> data = new ArrayList<String>();
         if (firstJson.product_list.getfacets().size.total > 0) {
             data.add(SIZE_LABEL);
         }
@@ -72,7 +71,7 @@ public class hbSuport {
         }
     }
 
-    private static void getlist(final String selected, final NonSwipe pager, final DynamicAdapter mAdapter) {
+    private static void getlist(final String selected, final ViewPagerHolder pager, final DynamicAdapter mAdapter) {
       /*  Iterator<SelectChoice> io = selection_memory.iterator();
         while (io.hasNext()) {
             SelectChoice mSelect = io.next();
@@ -96,7 +95,7 @@ public class hbSuport {
             final List<SelectChoice> selection_memory,
             final ReponseNormal saved_list,
             final String name) {
-        final boolean inDaList = inList(name, selection_memory);
+        //final boolean inDaList = inList(name, selection_memory);
         final FilterGroup fgroup = saved_list.product_list.getfacets();
         SelectChoice lv0 = new SelectChoice(false, name);
         if (name.contains(SIZE_LABEL)) {

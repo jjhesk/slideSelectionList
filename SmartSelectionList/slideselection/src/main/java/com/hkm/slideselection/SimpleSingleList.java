@@ -84,10 +84,10 @@ public class SimpleSingleList extends Fragment {
         super.onAttach(activity);
         try {
             if (getParentFragment() instanceof SimpleStepSelectionFragment) {
-                SimpleStepSelectionFragment f = (SimpleStepSelectionFragment) getParentFragment();
+                SimpleStepSelectionFragment parent = (SimpleStepSelectionFragment) getParentFragment();
                 // this.listener = f.listener;
-                mBus = f.getBusInstance();
-                myLevelConfiguration = f.getLevel(getArguments().getInt(LEVEL));
+                mBus = parent.getBusInstance();
+                myLevelConfiguration = parent.getLevel(getArguments().getInt(LEVEL) - 1);
             }
         } catch (Exception e) {
             myLevelConfiguration = null;
@@ -195,7 +195,7 @@ public class SimpleSingleList extends Fragment {
             myLevelConfiguration.setSelectedAtPos(position);
             mBus.post(myLevelConfiguration);
         } else {
-            mBus.post(position);
+            mBus.post(new MessageEvent(position));
         }
     }
 
@@ -243,6 +243,7 @@ public class SimpleSingleList extends Fragment {
     }
 
     protected void bindData(String[] data) {
+        mList.clear();
         for (int i = 0; i < data.length; i++) {
             madapter.insert(mList, data[i], mList.size());
         }

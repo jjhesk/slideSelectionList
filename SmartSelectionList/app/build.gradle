@@ -3,13 +3,12 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
-
     defaultConfig {
         applicationId "com.smartselection.demo"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName '1.2 standr'
         multiDexEnabled = true
     }
     buildTypes {
@@ -17,6 +16,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    productFlavors {
     }
 }
 
@@ -35,4 +36,5 @@ dependencies {
     compile project(':slideselection')
     compile project(':hbsdk')
     //compile 'com.jakewharton:butterknife:5.1.1'
+    //compile 'com.github.HKMOpen:SDKhb:1.0'
 }

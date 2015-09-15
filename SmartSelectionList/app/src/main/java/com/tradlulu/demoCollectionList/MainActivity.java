@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 
-import com.hkm.layout.Module.NonSwipe;
 import com.hkm.slideselection.DynamicAdapter;
 import com.hkm.slideselection.SelectChoice;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
+import com.hkm.slideselection.app.ViewPagerHolder;
 import com.hkm.slideselection.bridgeChanger;
 import com.tradlulu.demoCollectionList.MyList.basicSupport;
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements bridgeChanger {
     }
 
     @Override
-    public void SelectNow(final NonSwipe pager, final DynamicAdapter mAdapter, final SelectChoice choice) {
+    public void SelectNow(final ViewPagerHolder pager, final DynamicAdapter mAdapter, final SelectChoice choice) {
 
         uiHandler.postDelayed(new Runnable() {
             @Override
@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements bridgeChanger {
     }
 
     @Override
-    public void HomeSelect(int position) {
+    public void HomeSelect(ViewPagerHolder pager, DynamicAdapter mAdapter, int position) {
 
     }
+
 }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context=".SimpleStepSelectionFragment">
 
-    <com.hkm.layout.Module.NonSwipe
+    <com.hkm.slideselection.app.ViewPagerHolder
         android:id="@id/sssl_pageholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

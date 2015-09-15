@@ -8,14 +8,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hkm.layout.Module.NonSwipe;
 import com.hkm.slideselection.DynamicAdapter;
 import com.hkm.slideselection.SelectChoice;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
+import com.hkm.slideselection.app.ViewPagerHolder;
 import com.hkm.slideselection.bridgeChanger;
 import com.tradlulu.demoCollectionList.MyList.basicSupport;
 
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -96,7 +95,7 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
         return false;
     }
 
-    private void getlist(final String selected, final NonSwipe pager, final DynamicAdapter mAdapter) {
+    private void getlist(final String selected, final ViewPagerHolder pager, final DynamicAdapter mAdapter) {
         Iterator<SelectChoice> io = selection_memory.iterator();
         while (io.hasNext()) {
             SelectChoice mSelect = io.next();
@@ -122,7 +121,7 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
     }
 
     @Override
-    public void SelectNow(final NonSwipe pager, final DynamicAdapter mAdapter, SelectChoice choice) {
+    public void SelectNow(final ViewPagerHolder pager, final DynamicAdapter mAdapter, SelectChoice choice) {
         if (!isInProgress) {
             if (choice.getLevel() == 1) {
                 if (!inList(choice.selected_string())) {
@@ -142,9 +141,10 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
     }
 
     @Override
-    public void HomeSelect(int position) {
+    public void HomeSelect(ViewPagerHolder pager, DynamicAdapter mAdapter, int position) {
 
     }
+
 
 
 }

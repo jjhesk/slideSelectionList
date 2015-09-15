@@ -1,14 +1,7 @@
 package com.tradlulu.demoCollectionList.MyList;
 
-import com.hkm.layout.Module.NonSwipe;
-import com.hkm.slideselection.DynamicAdapter;
 import com.hkm.slideselection.SelectChoice;
-import com.hypebeast.sdk.api.model.hypebeaststore.ReponseNormal;
-import com.hypebeast.sdk.api.model.symfony.FilterGroup;
-import com.hypebeast.sdk.api.resources.hbstore.Products;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

@@ -1,6 +1,5 @@
 package com.hkm.slideselection;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 

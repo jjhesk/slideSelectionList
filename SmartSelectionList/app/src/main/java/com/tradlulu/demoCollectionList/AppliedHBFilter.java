@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hkm.layout.Module.NonSwipe;
 import com.hkm.slideselection.DynamicAdapter;
 import com.hkm.slideselection.SelectChoice;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
+import com.hkm.slideselection.app.ViewPagerHolder;
 import com.hkm.slideselection.bridgeChanger;
 import com.hypebeast.sdk.api.exception.ApiException;
 import com.hypebeast.sdk.api.model.hypebeaststore.ReponseNormal;
@@ -46,6 +46,8 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
     private Products products_interface;
     private int level = 0;
     private boolean initialize = false;
+    private DynamicAdapter mAdapter;
+    private ViewPagerHolder mPager;
 
     @Override
     public void success(ReponseNormal responseProductList, Response response) {
@@ -56,12 +58,13 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
             bindothers();
             getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "TagSliderMain").addToBackStack(null).commit();
             thecontroller.setCallBackListenerBridge(this);
-            inProgressDone();
-        }
-        if (level == 1) {
 
+        } else if (level == 1) {
+            lv0 = hbSuport.byReturnJson(responseProductList);
+            mAdapter.updateFirstConfiguration(lv0);
+            mAdapter.levelBack(mPager);
         }
-
+        inProgressDone();
     }
 
     @Override
@@ -70,8 +73,10 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
     }
 
     @Override
-    public void SelectNow(NonSwipe pager, DynamicAdapter mAdapter, SelectChoice the_choice) {
+    public void SelectNow(ViewPagerHolder pager, DynamicAdapter mAdapter, SelectChoice the_choice) {
         try {
+            this.mAdapter = mAdapter;
+            this.mPager = pager;
             level = the_choice.getLevel();
             if (!isInProgress) {
                 inProgress();
@@ -103,7 +108,7 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
     }
 
     @Override
-    public void HomeSelect(final NonSwipe pager,
+    public void HomeSelect(final ViewPagerHolder pager,
                            final DynamicAdapter mAdapter, int position) {
 
         lv0.setSelectedAtPos(position);
@@ -187,7 +192,7 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
         return false;
     }
 
-    private void getlist(final String selected, final NonSwipe pager, final DynamicAdapter mAdapter) {
+    private void getlist(final String selected, final ViewPagerHolder pager, final DynamicAdapter mAdapter) {
         Iterator<SelectChoice> io = selection_memory.iterator();
         while (io.hasNext()) {
             SelectChoice mSelect = io.next();
