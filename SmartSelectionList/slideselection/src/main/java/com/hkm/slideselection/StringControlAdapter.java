@@ -8,7 +8,6 @@ import android.os.Bundle;
  */
 public class StringControlAdapter extends DynamicAdapter<SelectChoice> {
 
-
     public StringControlAdapter(FragmentManager fragmentManager, SelectChoice configuration) {
         super(fragmentManager, configuration);
     }
