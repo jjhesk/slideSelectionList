@@ -16,6 +16,7 @@ import com.hkm.slideselection.SimpleSingleList;
 import com.hkm.slideselection.StringControlAdapter;
 import com.hkm.slideselection.SelectChoice;
 import com.hkm.slideselection.bridgeChanger;
+import com.hkm.slideselection.simpleBridge;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -26,7 +27,7 @@ public class SimpleStepSelectionFragment extends Fragment {
     protected Bus mBus;
     protected NonSwipe mViewPager;
     protected StringControlAdapter adapter;
-    protected bridgeChanger mbridge = new bridgeChanger() {
+    protected bridgeChanger mbridge = new simpleBridge() {
 
         @Override
         public void SelectNow(NonSwipe mpage, DynamicAdapter mAdapter, SelectChoice mChoice) {
@@ -54,6 +55,7 @@ public class SimpleStepSelectionFragment extends Fragment {
         }
         return g;
     }
+
 
     public SimpleStepSelectionFragment() {
     }
@@ -86,7 +88,8 @@ public class SimpleStepSelectionFragment extends Fragment {
         adapter = new StringControlAdapter(getChildFragmentManager(), getArguments());
         //=this is not going to work
         mViewPager.setAdapter(adapter);
-         /*      mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+         /*
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -119,6 +122,11 @@ public class SimpleStepSelectionFragment extends Fragment {
                 mViewPager,
                 adapter,
                 event_choice);
+    }
+
+    @Subscribe
+    public void onEvent(int event_integer) {
+        mbridge.HomeSelect(mViewPager, adapter, event_integer);
     }
 
     public Bus getBusInstance() {

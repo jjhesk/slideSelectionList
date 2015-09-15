@@ -10,4 +10,8 @@ public interface bridgeChanger {
             final NonSwipe pager,
             final DynamicAdapter mAdapter,
             final SelectChoice choice);
+
+    void HomeSelect(final NonSwipe pager,
+                    final DynamicAdapter mAdapter,
+                    final int position);
 }

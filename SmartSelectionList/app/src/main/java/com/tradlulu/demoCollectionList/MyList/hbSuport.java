@@ -44,7 +44,6 @@ public class hbSuport {
         lv0.setResourceData(data);
         lv0.setLevel(0);
         return lv0;
-
     }
 
     private static boolean inList(String selected, List<SelectChoice> selection_memory) {

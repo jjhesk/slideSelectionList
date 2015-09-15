@@ -1,5 +1,6 @@
 package com.hkm.slideselection;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 
@@ -64,11 +65,13 @@ public class StringControlAdapter extends DynamicAdapter<SelectChoice> {
         return firstPageListConfiguration;
     }*/
     @Override
-    protected SimpleSingleList logicBoard(SelectChoice con) {
+    protected SimpleSingleList createList(SelectChoice con) {
         if (con.isMulti()) {
             return SimpleSingleList.newInstance(con.getSelections(), con.getSimpleSource(), getCurrentLevel());
         } else {
             return SimpleSingleList.newInstance(con.getSelection(), con.getSimpleSource(), getCurrentLevel());
         }
     }
+
+
 }

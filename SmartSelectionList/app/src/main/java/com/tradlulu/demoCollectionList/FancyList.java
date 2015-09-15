@@ -141,5 +141,10 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
         }
     }
 
+    @Override
+    public void HomeSelect(int position) {
+
+    }
+
 
 }

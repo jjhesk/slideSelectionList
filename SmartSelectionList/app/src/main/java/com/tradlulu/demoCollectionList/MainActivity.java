@@ -52,4 +52,9 @@ public class MainActivity extends AppCompatActivity implements bridgeChanger {
         }, 4000);
 
     }
+
+    @Override
+    public void HomeSelect(int position) {
+
+    }
 }

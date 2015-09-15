@@ -51,7 +51,8 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
     public void success(ReponseNormal responseProductList, Response response) {
         latest_response = responseProductList;
         if (initialize) {
-            thecontroller = SimpleStepSelectionFragment.firstLevel(hbSuport.byReturnJson(responseProductList));
+            lv0 = hbSuport.byReturnJson(responseProductList);
+            thecontroller = SimpleStepSelectionFragment.firstLevel(lv0);
             bindothers();
             getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "TagSliderMain").addToBackStack(null).commit();
             thecontroller.setCallBackListenerBridge(this);
@@ -88,13 +89,7 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
                     return;
                 } else {
 
-                    title_navigation.setText(the_choice.selected_string());
-                    mAdapter.levelForward(
-                            pager,
-                            hbSuport.fromFirstColumn(selection_memory, latest_response, the_choice.selected_string()));
 
-                    inProgressDone();
-                    return;
                 }
             }
         } catch (ApiException e) {
@@ -105,6 +100,24 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
             Log.d("check_f_result", e.getMessage());
         }
 
+    }
+
+    @Override
+    public void HomeSelect(final NonSwipe pager,
+                           final DynamicAdapter mAdapter, int position) {
+
+        lv0.setSelectedAtPos(position);
+        title_navigation.setText(lv0.selected_string());
+        mAdapter.levelForward(
+                pager,
+                hbSuport.fromFirstColumn(
+                        selection_memory,
+                        latest_response,
+                        lv0.selected_string()
+                ));
+
+        inProgressDone();
+        return;
     }
 
     @Override

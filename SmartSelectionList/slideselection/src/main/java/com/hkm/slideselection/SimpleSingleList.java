@@ -194,6 +194,8 @@ public class SimpleSingleList extends Fragment {
         if (myLevelConfiguration != null) {
             myLevelConfiguration.setSelectedAtPos(position);
             mBus.post(myLevelConfiguration);
+        } else {
+            mBus.post(position);
         }
     }
 

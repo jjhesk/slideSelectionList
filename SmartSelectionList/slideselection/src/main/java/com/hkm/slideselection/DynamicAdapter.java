@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public abstract class DynamicAdapter<H extends LevelResources> extends FragmentStatePagerAdapter {
     private int level_current;
-    private ArrayList<H> levelObjects = new ArrayList<>();
+    protected ArrayList<H> levelObjects = new ArrayList<>();
     protected Fragment firstPage;
     protected H firstPageListConfiguration;
     private ArrayList<SimpleSingleList> views = new ArrayList<SimpleSingleList>();
@@ -46,12 +46,6 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
         notifyDataSetChanged();
     }
 
-    public void setCurrentSelectionNotify(int which_item) {
-        if (levelObjects.size() >= 1) {
-            H b = levelObjects.get(level_current - 1);
-            b.setSelectedAtPos(which_item);
-        }
-    }
 
     protected void takeOutConfiguration() {
         hh.postDelayed(new Runnable() {
@@ -120,39 +114,10 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
         return v;
     }*/
 
-    protected abstract SimpleSingleList logicBoard(H con);
+    protected abstract SimpleSingleList createList(H con);
 
     protected abstract H extractBundle();
 
-    /**
-     * tells if the first page is just a normal page or not
-     *
-     * @return the type from the level
-     */
-    // protected abstract H FirstConfiguration();
-
-    // Returns the fragment to display for that page
-    @Override
-    public Fragment getItem(final int position) {
-        // return logicBoard(firstPageListConfiguration);
-        if (position > 0) {
-            H loca = levelObjects.get(position - 1);
-            return logicBoard(loca);
-        } else {
-            // if (firstPage instanceof SimpleSingleList) {
-            //    return (SimpleSingleList) firstPage;
-            //  } else
-            return firstPage;
-        }
-    }
-
-    public int getCurrentLevel() {
-        return level_current;
-    }
-
-    public H getCurrentLVObject() throws Exception {
-        return getLevelObjectAt(level_current - 1);
-    }
 
     @Override
     public CharSequence getPageTitle(int position) {
@@ -163,6 +128,7 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
         if (levelObjects.size() > 0) {
             return levelObjects.get(n);
         } else {
+            //this will be the first object level
             throw new Exception("not found in the level object");
         }
     }
@@ -200,4 +166,33 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
     public void removeAll() {
         views = new ArrayList<SimpleSingleList>();
     }
+
+
+    /**
+     * tells if the first page is just a normal page or not
+     *
+     * @return the type from the level
+     */
+    // protected abstract H FirstConfiguration();
+
+    // Returns the fragment to display for that page
+    @Override
+    public Fragment getItem(final int position) {
+        // return logicBoard(firstPageListConfiguration);
+        if (position > 0) {
+            H loca = levelObjects.get(position - 1);
+            return createList(loca);
+        } else {
+            return firstPage;
+        }
+    }
+
+    public int getCurrentLevel() {
+        return level_current;
+    }
+
+    public H getCurrentLVObject() throws Exception {
+        return getLevelObjectAt(level_current - 1);
+    }
+
 }

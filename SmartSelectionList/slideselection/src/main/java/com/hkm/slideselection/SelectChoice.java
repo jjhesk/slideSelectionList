@@ -4,6 +4,11 @@ package com.hkm.slideselection;
  * Created by hesk on 10/9/15.
  */
 public class SelectChoice extends LevelResources<String> {
+    public enum ListType {
+        MAINFILTER,
+        FILTER_ITEM
+    }
+
     private String choice_selection;
 
     public String selected_string() {
@@ -40,8 +45,6 @@ public class SelectChoice extends LevelResources<String> {
 
 
     public String toString() {
-
-
         return "";
     }
 }
