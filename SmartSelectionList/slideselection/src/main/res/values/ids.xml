@@ -8,4 +8,9 @@
     <item name="sssl_item_touch" type="id" />
     <item name="sssl_item_checker" type="id" />
     <item name="sssl_item_switcher" type="id" />
+    <item name="sssl_b_filter_apply" type="id" />
+    <item name="sssl_b_filter_clear" type="id" />
+    <item name="sssl_b_back" type="id" />
+    <item name="sssl_ui_loading_progress_bar_xx" type="id" />
+    <item name="sssl_title_navigation" type="id" />
 </resources>

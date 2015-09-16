@@ -1,4 +1,4 @@
-package com.hkm.slideselection;
+package com.hkm.slideselection.worker;
 
 import java.io.Serializable;
 import java.util.ArrayList;

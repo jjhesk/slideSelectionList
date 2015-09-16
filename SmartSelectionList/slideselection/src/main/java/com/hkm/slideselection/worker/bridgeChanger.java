@@ -1,6 +1,7 @@
-package com.hkm.slideselection;
+package com.hkm.slideselection.worker;
 
 
+import com.hkm.slideselection.V1.DynamicAdapter;
 import com.hkm.slideselection.app.ViewPagerHolder;
 
 /**

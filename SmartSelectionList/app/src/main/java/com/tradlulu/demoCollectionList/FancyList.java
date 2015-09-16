@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hkm.slideselection.DynamicAdapter;
-import com.hkm.slideselection.SelectChoice;
+import com.hkm.slideselection.V1.DynamicAdapter;
+import com.hkm.slideselection.worker.SelectChoice;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
 import com.hkm.slideselection.app.ViewPagerHolder;
-import com.hkm.slideselection.bridgeChanger;
+import com.hkm.slideselection.worker.bridgeChanger;
 import com.tradlulu.demoCollectionList.MyList.basicSupport;
 
 

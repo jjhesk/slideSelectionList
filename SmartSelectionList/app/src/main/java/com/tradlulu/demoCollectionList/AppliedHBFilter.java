@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hkm.slideselection.DynamicAdapter;
-import com.hkm.slideselection.SelectChoice;
+import com.hkm.slideselection.V1.DynamicAdapter;
+import com.hkm.slideselection.worker.SelectChoice;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
 import com.hkm.slideselection.app.ViewPagerHolder;
-import com.hkm.slideselection.bridgeChanger;
+import com.hkm.slideselection.worker.bridgeChanger;
 import com.hypebeast.sdk.api.exception.ApiException;
 import com.hypebeast.sdk.api.model.hypebeaststore.ReponseNormal;
 import com.hypebeast.sdk.api.resources.hbstore.Products;
@@ -37,7 +37,7 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
     private SimpleStepSelectionFragment thecontroller;
     private SelectChoice lv0;
     private Handler uiHandler = new Handler();
-    private TintImageView back;
+    private TintImageView back, apply, reset;
     private ProgressBar mProgress;
     private TextView title_navigation;
     private boolean isInProgress = false;
@@ -53,14 +53,14 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
     public void success(ReponseNormal responseProductList, Response response) {
         latest_response = responseProductList;
         if (initialize) {
+            selection_memory.clear();
             lv0 = hbSuport.byReturnJson(responseProductList);
             thecontroller = SimpleStepSelectionFragment.firstLevel(lv0);
             bindothers();
             getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "TagSliderMain").addToBackStack(null).commit();
             thecontroller.setCallBackListenerBridge(this);
-
         } else if (level == 1) {
-            lv0 = hbSuport.byReturnJson(responseProductList);
+            lv0 = hbSuport.byReturnJson(responseProductList, selection_memory.iterator());
             mAdapter.updateFirstConfiguration(lv0);
             mAdapter.levelBack(mPager);
         }
@@ -72,6 +72,13 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
 
     }
 
+    /**
+     * from the child menu
+     *
+     * @param pager      pager
+     * @param mAdapter   adapter
+     * @param the_choice choice
+     */
     @Override
     public void SelectNow(ViewPagerHolder pager, DynamicAdapter mAdapter, SelectChoice the_choice) {
         try {
@@ -99,10 +106,11 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
             }
         } catch (ApiException e) {
             e.printStackTrace();
-            Log.d("check_f_result", e.getMessage());
+            Log.d("check_f_result_err", e.getMessage());
+
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("check_f_result", e.getMessage());
+            Log.d("check_f_result_err", e.getMessage());
         }
 
     }
@@ -131,6 +139,10 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
         client = new HBStoreApiClient();
         products_interface = client.createProducts();
         setContentView(R.layout.fancy_1);
+        start_new_filter();
+    }
+
+    private void start_new_filter() {
         try {
             initialize = true;
             products_interface.bysubcate("accessories", "socks", this);
@@ -139,10 +151,11 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
         }
     }
 
-
     private void bindothers() {
         back = (TintImageView) findViewById(R.id.back_level);
         title_navigation = (TextView) findViewById(R.id.title_navigation);
+        apply = (TintImageView) findViewById(R.id.apply_filter);
+        reset = (TintImageView) findViewById(R.id.reset_filter);
         mProgress = (ProgressBar) findViewById(R.id.ui_loading_progress_bar_xx);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,11 +165,35 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
                 }
             }
         });
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("result_f", "here u go");
+            }
+        });
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("result_f", "remove the filter and reset");
+                start_new_filter();
+            }
+        });
+    }
+
+    private void reveal_apply(boolean enabled) {
+        if (enabled) {
+            apply.setVisibility(View.VISIBLE);
+            reset.setVisibility(View.VISIBLE);
+        } else {
+            apply.setVisibility(View.GONE);
+            reset.setVisibility(View.GONE);
+        }
     }
 
     private void inProgress() {
         mProgress.animate().alpha(1f);
         isInProgress = true;
+        reveal_apply(false);
     }
 
     private void inProgressDone() {
@@ -164,6 +201,7 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
             @Override
             public void run() {
                 isInProgress = false;
+                reveal_apply(true);
             }
         });
         initialize = false;

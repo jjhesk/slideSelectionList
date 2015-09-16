@@ -1,7 +1,9 @@
 package com.tradlulu.demoCollectionList.MyList;
 
-import com.hkm.slideselection.DynamicAdapter;
-import com.hkm.slideselection.SelectChoice;
+import android.util.Log;
+
+import com.hkm.slideselection.V1.DynamicAdapter;
+import com.hkm.slideselection.worker.SelectChoice;
 import com.hkm.slideselection.app.ViewPagerHolder;
 import com.hypebeast.sdk.api.model.hypebeaststore.ReponseNormal;
 import com.hypebeast.sdk.api.model.symfony.FilterGroup;
@@ -40,6 +42,37 @@ public class hbSuport {
         if (firstJson.product_list.getfacets().priceRange.rangeslist.size() > 0) {
             data.add(PRICE_LABEL);
         }
+        lv0.setResourceData(data);
+        lv0.setLevel(0);
+        return lv0;
+    }
+
+    private static void additionalLabel(List<String> list, String tag, Iterator<SelectChoice> itor, boolean hasChildMenuList) {
+        boolean isAdded = false;
+        while (itor.hasNext()) {
+            SelectChoice se = itor.next();
+            if (se.isTag(tag)) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(tag);
+                sb.append(": ");
+                sb.append(se.selected_string());
+                list.add(sb.toString());
+                isAdded = true;
+            }
+        }
+        if (!isAdded && hasChildMenuList) {
+            list.add(tag);
+        }
+    }
+
+    public static SelectChoice byReturnJson(ReponseNormal firstJson, Iterator<SelectChoice> itor) {
+        SelectChoice lv0 = new SelectChoice(false);
+        final List<String> data = new ArrayList<String>();
+        additionalLabel(data, SIZE_LABEL, itor, firstJson.product_list.getfacets().size.total > 0);
+        additionalLabel(data, BRAND_LABEL, itor, firstJson.product_list.getfacets().brand.total > 0);
+        additionalLabel(data, CATEGORY_LABEL, itor, firstJson.product_list.getfacets().category.total > 0);
+        additionalLabel(data, COLOR_LABEL, itor, firstJson.product_list.getfacets().color.total > 0);
+        additionalLabel(data, PRICE_LABEL, itor, firstJson.product_list.getfacets().priceRange.rangeslist.size() > 0);
         lv0.setResourceData(data);
         lv0.setLevel(0);
         return lv0;
@@ -111,5 +144,15 @@ public class hbSuport {
         }
         lv0.setLevel(1);
         return lv0;
+    }
+
+    public static String developJson(Iterator<SelectChoice> io) {
+        FilterApplication filter = FilterApplication.newFilter();
+        while (io.hasNext()) {
+            hbSuport.check_preapply_filter(filter, io.next());
+        }
+        String json = filter.getJson();
+        Log.d("check_f_result", json);
+        return json;
     }
 }

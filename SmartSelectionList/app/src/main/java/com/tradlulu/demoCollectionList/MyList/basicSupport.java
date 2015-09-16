@@ -1,6 +1,6 @@
 package com.tradlulu.demoCollectionList.MyList;
 
-import com.hkm.slideselection.SelectChoice;
+import com.hkm.slideselection.worker.SelectChoice;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -34,7 +34,8 @@
             android:name="com.tradlulu.demoCollectionList.MainActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name="com.tradlulu.demoCollectionList.FancyList" />
-        <activity android:name="com.tradlulu.demoCollectionList.AppliedHBFilter">
+        <activity android:name="com.tradlulu.demoCollectionList.AppliedHBFilter" />
+        <activity android:name="com.tradlulu.demoCollectionList.AppliedHBFilteEZ">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

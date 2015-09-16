@@ -1,4 +1,4 @@
-package com.hkm.slideselection;
+package com.hkm.slideselection.V1;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.support.v13.app.FragmentStatePagerAdapter;
 
 import com.hkm.slideselection.app.ViewPagerHolder;
+import com.hkm.slideselection.worker.LevelResources;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,11 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
         notifyDataSetChanged();
     }
 
+    protected void addConfiguration(H FConfiguration, int level) {
+        levelObjects.add(level - 1, FConfiguration);
+        notifyDataSetChanged();
+    }
+
 
     protected void takeOutConfiguration() {
         hh.postDelayed(new Runnable() {
@@ -62,7 +68,7 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
     public void levelForward(ViewPagerHolder pager, H mH) {
         int now = pager.getCurrentItem() + 1;
         level_current++;
-        addConfiguration(mH);
+        addConfiguration(mH, level_current);
         pager.setCurrentItem(now, true);
     }
 
@@ -72,7 +78,7 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
             int back = level_step - 1;
             pager.setCurrentItem(back, true);
             level_current--;
-            takeOutConfiguration();
+            // takeOutConfiguration();
             return true;
         } else return false;
     }
@@ -100,13 +106,13 @@ public abstract class DynamicAdapter<H extends LevelResources> extends FragmentS
     @Override
     public int getCount() {
         return levelObjects.size() + (firstPageListConfiguration == null ? 0 : 1);
-        // return h;
     }
 
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
+
    /*
     @Override
     public Object instantiateItem(ViewGroup container, int position) {

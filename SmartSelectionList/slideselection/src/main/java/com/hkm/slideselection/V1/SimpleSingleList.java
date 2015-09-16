@@ -1,4 +1,4 @@
-package com.hkm.slideselection;
+package com.hkm.slideselection.V1;
 
 
 import android.annotation.TargetApi;
@@ -17,7 +17,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.balysv.materialripple.MaterialRippleLayout;
+import com.hkm.slideselection.R;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
+import com.hkm.slideselection.worker.MessageEvent;
+import com.hkm.slideselection.worker.SelectChoice;
+import com.hkm.slideselection.worker.Util;
 import com.marshalchen.ultimaterecyclerview.ItemTouchListenerAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
@@ -43,32 +47,15 @@ public class SimpleSingleList extends Fragment {
     private SelectChoice myLevelConfiguration;
     private Bus mBus;
 
-    public static Bundle stuffs(int selection, String[] list, int order) {
-        Bundle b = new Bundle();
-        int[] single_selection = new int[]{selection};
-        b.putIntArray(SELECTION, single_selection);
-        b.putStringArray(DATASTRING, list);
-        b.putInt(LEVEL, order);
-        return b;
-    }
-
-    public static Bundle stuffs(int[] selections, String[] list, int order) {
-        Bundle b = new Bundle();
-        b.putIntArray(SELECTION, selections);
-        b.putStringArray(DATASTRING, list);
-        b.putInt(LEVEL, order);
-        return b;
-    }
-
     public static SimpleSingleList newInstance(int[] selections, String[] list, int order) {
         SimpleSingleList b = new SimpleSingleList();
-        b.setArguments(stuffs(selections, list, order));
+        b.setArguments(Util.stuffs(selections, list, order));
         return b;
     }
 
     public static SimpleSingleList newInstance(int selections, String[] list, int order) {
         SimpleSingleList b = new SimpleSingleList();
-        b.setArguments(stuffs(selections, list, order));
+        b.setArguments(Util.stuffs(selections, list, order));
         return b;
     }
 
@@ -190,6 +177,7 @@ public class SimpleSingleList extends Fragment {
         });
     }
 
+
     private void makeSelection(int position) {
         if (myLevelConfiguration != null) {
             myLevelConfiguration.setSelectedAtPos(position);
@@ -214,6 +202,7 @@ public class SimpleSingleList extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mRecyclerView = (UltimateRecyclerView) view.findViewById(getListRecyclerView());
         itemTouchListenerAdapter = new ItemTouchListenerAdapter(mRecyclerView.mRecyclerView,
                 new ItemTouchListenerAdapter.RecyclerViewOnItemClickListener() {
@@ -235,15 +224,29 @@ public class SimpleSingleList extends Fragment {
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setSaveEnabled(false);
         mRecyclerView.mRecyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
+
+        // if (savedInstanceState == null) {
         if (getArguments() != null && getArguments().getStringArray(DATASTRING) != null) {
             bindData(getArguments().getStringArray(DATASTRING));
         } else {
             Log.d("error on null", "not found on null pointer");
         }
+        // }
+    }
+
+    public void updateNewList(String[] data) {
+        mList.clear();
+        for (int i = 0; i < data.length; i++) {
+            madapter.insert(mList, data[i], mList.size());
+        }
+    }
+
+    public void setSelectionConfiguration(SelectChoice configuration) {
+        myLevelConfiguration = configuration;
     }
 
     protected void bindData(String[] data) {
-        mList.clear();
+        // mList.clear();
         for (int i = 0; i < data.length; i++) {
             madapter.insert(mList, data[i], mList.size());
         }

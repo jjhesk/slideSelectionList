@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SimpleStepSelectionFragment">
+
+    <RelativeLayout
+        android:id="@+id/topbarllabell"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <android.support.v7.internal.widget.TintImageView
+            android:id="@+id/sssl_b_back"
+            style="@android:style/Widget.Holo.ActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_back_adjusted" />
+
+        <TextView
+            android:id="@id/sssl_title_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/sssl_ui_loading_progress_bar_xx"
+            android:layout_toRightOf="@id/sssl_b_back"
+            android:gravity="center_horizontal|center_vertical"
+            android:textSize="20sp" />
+
+
+        <android.support.v7.internal.widget.TintImageView
+            android:id="@+id/sssl_b_filter_apply"
+            style="@android:style/Widget.Holo.ActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@id/sssl_b_filter_clear"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_clear_setting" />
+
+        <android.support.v7.internal.widget.TintImageView
+            android:id="@id/sssl_b_filter_clear"
+            style="@android:style/Widget.Holo.ActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_check" />
+
+        <ProgressBar
+            android:id="@id/sssl_ui_loading_progress_bar_xx"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <com.hkm.slideselection.app.ViewPagerHolder
+        android:id="@id/sssl_pageholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topbarllabell"
+        android:layout_margin="0dp"
+        android:background="@android:color/white"
+        android:padding="0dp" />
+</RelativeLayout>

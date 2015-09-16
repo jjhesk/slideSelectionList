@@ -1,18 +1,22 @@
 package com.tradlulu.demoCollectionList;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.hkm.slideselection.V1.DynamicAdapter;
-import com.hkm.slideselection.worker.SelectChoice;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
+import com.hkm.slideselection.worker.SelectChoice;
+import com.hkm.slideselection.app.HbSelectionFragment;
 import com.hkm.slideselection.app.ViewPagerHolder;
 import com.hkm.slideselection.worker.bridgeChanger;
+import com.hkm.slideselection.worker.bridgeEZ;
 import com.tradlulu.demoCollectionList.MyList.basicSupport;
 
-
-public class MainActivity extends AppCompatActivity implements bridgeChanger {
+/**
+ * Created by hesk on 16/9/15.
+ */
+public class SimpleFast extends AppCompatActivity implements bridgeChanger {
     SimpleStepSelectionFragment thecontroller;
     Handler uiHandler = new Handler();
 

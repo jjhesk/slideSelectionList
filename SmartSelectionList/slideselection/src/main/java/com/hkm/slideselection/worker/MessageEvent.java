@@ -1,4 +1,4 @@
-package com.hkm.slideselection;
+package com.hkm.slideselection.worker;
 
 /**
  * Created by hesk on 15/9/15.
