@@ -47,32 +47,32 @@ public class hbSuport {
         return lv0;
     }
 
-    private static void additionalLabel(List<String> list, String tag, Iterator<SelectChoice> itor, boolean hasChildMenuList) {
-        boolean isAdded = false;
-        while (itor.hasNext()) {
-            SelectChoice se = itor.next();
+    private static void additionalLabel(final ArrayList<String> display, String tag, final Iterator<SelectChoice> saved, boolean hasChildMenuList) {
+        while (saved.hasNext()) {
+            final SelectChoice se = saved.next();
             if (se.isTag(tag)) {
-                StringBuilder sb = new StringBuilder();
+                final StringBuilder sb = new StringBuilder();
                 sb.append(tag);
                 sb.append(": ");
                 sb.append(se.selected_string());
-                list.add(sb.toString());
-                isAdded = true;
+                display.add(sb.toString());
+                return;
             }
         }
-        if (!isAdded && hasChildMenuList) {
-            list.add(tag);
+
+        if (hasChildMenuList) {
+            display.add(tag);
         }
     }
 
-    public static SelectChoice byReturnJson(ReponseNormal firstJson, Iterator<SelectChoice> itor) {
-        SelectChoice lv0 = new SelectChoice(false);
-        final List<String> data = new ArrayList<String>();
-        additionalLabel(data, SIZE_LABEL, itor, firstJson.product_list.getfacets().size.total > 0);
-        additionalLabel(data, BRAND_LABEL, itor, firstJson.product_list.getfacets().brand.total > 0);
-        additionalLabel(data, CATEGORY_LABEL, itor, firstJson.product_list.getfacets().category.total > 0);
-        additionalLabel(data, COLOR_LABEL, itor, firstJson.product_list.getfacets().color.total > 0);
-        additionalLabel(data, PRICE_LABEL, itor, firstJson.product_list.getfacets().priceRange.rangeslist.size() > 0);
+    public static SelectChoice byReturnJson(final ReponseNormal firstJson, final ArrayList<SelectChoice> mem) {
+        final SelectChoice lv0 = new SelectChoice(false);
+        final ArrayList<String> data = new ArrayList<String>();
+        additionalLabel(data, SIZE_LABEL, mem.iterator(), firstJson.product_list.getfacets().size.total > 0);
+        additionalLabel(data, BRAND_LABEL, mem.iterator(), firstJson.product_list.getfacets().brand.total > 0);
+        additionalLabel(data, CATEGORY_LABEL, mem.iterator(), firstJson.product_list.getfacets().category.total > 0);
+        additionalLabel(data, COLOR_LABEL, mem.iterator(), firstJson.product_list.getfacets().color.total > 0);
+        additionalLabel(data, PRICE_LABEL, mem.iterator(), firstJson.product_list.getfacets().priceRange.rangeslist.size() > 0);
         lv0.setResourceData(data);
         lv0.setLevel(0);
         return lv0;
@@ -89,20 +89,6 @@ public class hbSuport {
         return false;
     }
 
-    public static void check_preapply_filter(FilterApplication filter_data, SelectChoice mSelec) {
-        String name = mSelec.getTag();
-        if (name.contains(SIZE_LABEL)) {
-            filter_data.setSize(mSelec.selected_string());
-        } else if (name.contains(BRAND_LABEL)) {
-            filter_data.setBrand(mSelec.selected_string());
-        } else if (name.contains(CATEGORY_LABEL)) {
-            filter_data.setCate(mSelec.selected_string());
-        } else if (name.contains(COLOR_LABEL)) {
-            filter_data.setColor(mSelec.selected_string());
-        } else if (name.contains(PRICE_LABEL)) {
-            filter_data.setPrice(mSelec.selected_string());
-        }
-    }
 
     private static void getlist(final String selected, final ViewPagerHolder pager, final DynamicAdapter mAdapter) {
       /*  Iterator<SelectChoice> io = selection_memory.iterator();
@@ -129,21 +115,36 @@ public class hbSuport {
             final ReponseNormal saved_list,
             final String name) {
         //final boolean inDaList = inList(name, selection_memory);
-        final FilterGroup fgroup = saved_list.product_list.getfacets();
-        SelectChoice lv0 = new SelectChoice(false, name);
+        final FilterGroup gp = saved_list.product_list.getfacets();
+        final SelectChoice selection_ch = new SelectChoice(false, name);
         if (name.contains(SIZE_LABEL)) {
-            lv0.setResourceData(fgroup.convertToStringList(fgroup.size));
+            selection_ch.setResourceData(gp.convertToStringList(gp.size));
         } else if (name.contains(BRAND_LABEL)) {
-            lv0.setResourceData(fgroup.convertToStringList(fgroup.brand));
+            selection_ch.setResourceData(gp.convertToStringList(gp.brand));
         } else if (name.contains(CATEGORY_LABEL)) {
-            lv0.setResourceData(fgroup.convertToStringList(fgroup.category));
+            selection_ch.setResourceData(gp.convertToStringList(gp.category));
         } else if (name.contains(COLOR_LABEL)) {
-            lv0.setResourceData(fgroup.convertToStringList(fgroup.color));
+            selection_ch.setResourceData(gp.convertToStringList(gp.color));
         } else if (name.contains(PRICE_LABEL)) {
-            lv0.setResourceData(fgroup.convertToStringList(fgroup.priceRange));
+            selection_ch.setResourceData(gp.convertToStringList(gp.priceRange));
         }
-        lv0.setLevel(1);
-        return lv0;
+        selection_ch.setLevel(1);
+        return selection_ch;
+    }
+
+    public static void check_preapply_filter(FilterApplication filter_data, SelectChoice mSelec) {
+        String name = mSelec.getTag();
+        if (name.contains(SIZE_LABEL)) {
+            filter_data.setSize(mSelec.selected_string());
+        } else if (name.contains(BRAND_LABEL)) {
+            filter_data.setBrand(mSelec.selected_string());
+        } else if (name.contains(CATEGORY_LABEL)) {
+            filter_data.setCate(mSelec.selected_string());
+        } else if (name.contains(COLOR_LABEL)) {
+            filter_data.setColor(mSelec.selected_string());
+        } else if (name.contains(PRICE_LABEL)) {
+            filter_data.setPrice(mSelec.selected_string());
+        }
     }
 
     public static String developJson(Iterator<SelectChoice> io) {

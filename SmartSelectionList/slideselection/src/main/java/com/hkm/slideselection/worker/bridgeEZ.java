@@ -9,6 +9,8 @@ import com.hkm.slideselection.app.HbSelectionFragment;
  * Created by hesk on 16/9/15.
  */
 public interface bridgeEZ {
+    void request_applied();
+
     void request_new_filter();
 
     void SelectNow(
@@ -22,5 +24,6 @@ public interface bridgeEZ {
             final TwoLevelPagerAdapter mAdapter,
             final int position,
             final HbSelectionFragment hb);
+
 
 }

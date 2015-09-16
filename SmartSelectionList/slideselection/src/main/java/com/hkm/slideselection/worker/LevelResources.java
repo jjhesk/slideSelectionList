@@ -74,7 +74,7 @@ public abstract class LevelResources<T extends Serializable> {
     }
 
     public boolean isTag(String name) {
-        return tag == null ? false : name.equalsIgnoreCase(tag);
+        return tag == null ? false : name.equalsIgnoreCase(tag) || name.startsWith(tag);
     }
 
     public String getTag() {

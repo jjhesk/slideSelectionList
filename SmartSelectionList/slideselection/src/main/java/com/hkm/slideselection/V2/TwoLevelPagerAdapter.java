@@ -32,25 +32,28 @@ public class TwoLevelPagerAdapter extends FragmentStatePagerAdapter {
         level_current = 0;
     }
 
+    public void updateHome(ViewPager pager, SelectChoice selection_choices) {
+        firstPage.updateNewList(selection_choices);
+        levelBack(pager);
+    }
 
-    public void levelForward(ViewPager pager, SelectChoice mH) {
+    public void levelForward(ViewPager pager, SelectChoice selection_config) {
         level_current = 1;
-        secondPage.setSelectionConfiguration(mH);
+        secondPage.updateFilterOptionItems(selection_config);
+        secondPage.updateNewList(selection_config);
         pager.setCurrentItem(1, true);
     }
 
     public boolean levelBack(ViewPager pager, SelectChoice mh) {
-        if (level_current == 0) {
+        if (level_current == 1) {
+            firstPage.updateNewList(mh);
             pager.setCurrentItem(0, true);
             level_current = 0;
-            firstPage.updateNewList(mh.getSimpleSource());
             return false;
-            // firstPage.setSelectionConfiguration(mh);
         } else {
             pager.setCurrentItem(0, true);
             return true;
         }
-
     }
 
     public boolean levelBack(ViewPager pager) {

@@ -60,7 +60,7 @@ public class AppliedHBFilter extends AppCompatActivity implements bridgeChanger,
             getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "TagSliderMain").addToBackStack(null).commit();
             thecontroller.setCallBackListenerBridge(this);
         } else if (level == 1) {
-            lv0 = hbSuport.byReturnJson(responseProductList, selection_memory.iterator());
+            lv0 = hbSuport.byReturnJson(responseProductList, selection_memory);
             mAdapter.updateFirstConfiguration(lv0);
             mAdapter.levelBack(mPager);
         }

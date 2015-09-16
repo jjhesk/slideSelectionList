@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.hkm.slideselection.R;
+import com.hkm.slideselection.app.HbSelectionFragment;
 import com.hkm.slideselection.app.SimpleStepSelectionFragment;
 import com.hkm.slideselection.worker.MessageEvent;
 import com.hkm.slideselection.worker.SelectChoice;
@@ -72,9 +73,11 @@ public class SimpleSingleList extends Fragment {
         try {
             if (getParentFragment() instanceof SimpleStepSelectionFragment) {
                 SimpleStepSelectionFragment parent = (SimpleStepSelectionFragment) getParentFragment();
-                // this.listener = f.listener;
                 mBus = parent.getBusInstance();
                 myLevelConfiguration = parent.getLevel(getArguments().getInt(LEVEL) - 1);
+            } else if (getParentFragment() instanceof HbSelectionFragment) {
+                HbSelectionFragment parent = (HbSelectionFragment) getParentFragment();
+                mBus = parent.getBusInstance();
             }
         } catch (Exception e) {
             myLevelConfiguration = null;
@@ -234,14 +237,17 @@ public class SimpleSingleList extends Fragment {
         // }
     }
 
-    public void updateNewList(String[] data) {
+    public void updateNewList(SelectChoice configuration) {
         mList.clear();
-        for (int i = 0; i < data.length; i++) {
-            madapter.insert(mList, data[i], mList.size());
+        for (int i = 0; i < configuration.getSimpleSource().length; i++) {
+            madapter.insert(mList, configuration.getSimpleSource()[i], mList.size());
         }
+        mRecyclerView.setAdapter(madapter);
+        madapter.notifyDataSetChanged();
+        doneInitialLoading();
     }
 
-    public void setSelectionConfiguration(SelectChoice configuration) {
+    public void updateFilterOptionItems(SelectChoice configuration) {
         myLevelConfiguration = configuration;
     }
 

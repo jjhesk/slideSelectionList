@@ -80,25 +80,13 @@ public abstract class selectionBody extends Fragment {
 
     public abstract boolean onPressBack();
 
-    @Subscribe
     public abstract void onEvent(SelectChoice event_choice);
 
-    @Subscribe
     public abstract void onEvent(MessageEvent event_integer);
 
     public Bus getBusInstance() {
         return mBus;
     }
 
-    @Override
-    public void onStart() {
-        mBus.register(this);
-        super.onStart();
-    }
 
-    @Override
-    public void onStop() {
-        mBus.unregister(this);
-        super.onStop();
-    }
 }

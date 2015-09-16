@@ -15,6 +15,11 @@ public class bEZ implements bridgeEZ {
     }
 
     @Override
+    public void request_applied() {
+
+    }
+
+    @Override
     public void SelectNow(ViewPager pager, TwoLevelPagerAdapter mAdapter, SelectChoice choice, final HbSelectionFragment hb) {
 
     }

@@ -36,7 +36,7 @@ public class AppliedHBFilteEZ extends AppCompatActivity implements bridgeEZ, ret
 
     private ReponseNormal latest_response;
     private HbSelectionFragment thecontroller;
-    private SelectChoice lv0;
+    private SelectChoice lv0, inital_only;
     private boolean isInProgress = false;
     private ArrayList<SelectChoice> selection_memory = new ArrayList<>();
     private HBStoreApiClient client;
@@ -49,17 +49,19 @@ public class AppliedHBFilteEZ extends AppCompatActivity implements bridgeEZ, ret
     @Override
     public void success(ReponseNormal responseProductList, Response response) {
         latest_response = responseProductList;
-        if (initialize) {
-            selection_memory.clear();
+        if (level == 0) {
             lv0 = hbSuport.byReturnJson(responseProductList);
-            thecontroller = HbSelectionFragment.newInstance(lv0);
-            getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "TagSliderMain").addToBackStack(null).commit();
-            thecontroller.setInterfaceListener(this);
+            if (thecontroller == null) {
+                inital_only = lv0;
+                thecontroller = HbSelectionFragment.newInstance(inital_only);
+                getFragmentManager().beginTransaction().add(R.id.fragment, thecontroller, "TagSliderMain")
+                        .addToBackStack(null).commit();
+            }
         } else if (level == 1) {
-            lv0 = hbSuport.byReturnJson(responseProductList, selection_memory.iterator());
-            mAdapter.levelBack(mPager, lv0);
+            mAdapter.levelBack(mPager, hbSuport.byReturnJson(responseProductList, selection_memory));
+            thecontroller.inProgressDone();
         }
-        thecontroller.inProgressDone();
+
     }
 
     @Override
@@ -75,6 +77,11 @@ public class AppliedHBFilteEZ extends AppCompatActivity implements bridgeEZ, ret
         products_interface = client.createProducts();
         setContentView(R.layout.frame_oo);
         request_new_filter();
+    }
+
+    @Override
+    public void request_applied() {
+
     }
 
     /**
@@ -93,7 +100,13 @@ public class AppliedHBFilteEZ extends AppCompatActivity implements bridgeEZ, ret
     public void request_new_filter() {
         try {
             initialize = true;
-            products_interface.bysubcate("accessories", "socks", this);
+            selection_memory.clear();
+            if (inital_only == null)
+                products_interface.bysubcate("accessories", "socks", this);
+            else {
+                mAdapter.updateHome(mPager, inital_only);
+                thecontroller.inProgressDone();
+            }
         } catch (ApiException e) {
             e.printStackTrace();
         }
