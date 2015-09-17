@@ -159,8 +159,8 @@
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.0.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-maps-7.8.0" level="project" />
-    <orderEntry type="library" exported="" name="prettytime-3.2.7.Final" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.0" level="project" />
+    <orderEntry type="library" exported="" name="prettytime-3.2.7.Final" level="project" />
     <orderEntry type="module" module-name="slideselection" exported="" />
     <orderEntry type="module" module-name="hbsdk" exported="" />
   </component>
