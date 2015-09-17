@@ -2,8 +2,6 @@ package com.hypebeast.sdk.application.hbx;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hypebeast.sdk.Util.GsonUtil;
-import com.hypebeast.sdk.api.gson.RemoveEmptyElement;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -95,12 +93,13 @@ public class FilterApplication {
         mQuery.color = new String[]{TermWrap_string_label};
     }
 
-
     public String getJson() {
         final GsonBuilder gb = new GsonBuilder();
         Gson gson = gb.create();
         String filter = gson.toJson(this.mQuery);
-        return GsonUtil.removeEmptyArraySerialization(filter);
+        // String filter_url = Uri.encode(filter);
+        // if (newFilter) newFilter = false;
+        return filter;
     }
 
     public void reset() {

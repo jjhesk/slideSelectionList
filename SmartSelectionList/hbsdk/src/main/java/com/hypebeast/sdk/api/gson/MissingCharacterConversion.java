@@ -5,9 +5,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-
 import java.io.IOException;
-import java.net.URLDecoder;
 
 /**
  * Created by hesk on 28/7/15.

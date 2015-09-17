@@ -7,7 +7,10 @@ import com.hypebeast.sdk.Constants;
 import com.hypebeast.sdk.api.gson.GsonFactory;
 import com.hypebeast.sdk.api.gson.MissingCharacterConversion;
 import com.hypebeast.sdk.api.gson.RealmExclusion;
+import com.hypebeast.sdk.api.model.hbeditorial.Foundation;
+import com.hypebeast.sdk.api.model.hypebeaststore.MobileConfig;
 import com.hypebeast.sdk.api.resources.hbstore.Brand;
+import com.hypebeast.sdk.api.resources.hbstore.Overhead;
 import com.hypebeast.sdk.api.resources.hbstore.Products;
 import com.hypebeast.sdk.api.resources.hbstore.SingleProduct;
 
@@ -80,10 +83,14 @@ public class HBStoreApiClient extends Client {
                 .build();
     }
 
+
     public Products createProducts() {
         return mAdapter.create(Products.class);
     }
 
+    public Overhead createOverHead() {
+        return mAdapter.create(Overhead.class);
+    }
 
     public Brand createBrand() {
         return mAdapter.create(Brand.class);
@@ -91,5 +98,13 @@ public class HBStoreApiClient extends Client {
 
     public SingleProduct createRequest(String url_full_product) {
         return fullEndpoint(url_full_product).create(SingleProduct.class);
+    }
+
+    public String fromJsonToString(MobileConfig mFoundation) {
+        return "";
+    }
+
+    public MobileConfig fromsavedConfiguration(String mFoundation_string) {
+        return new MobileConfig();
     }
 }

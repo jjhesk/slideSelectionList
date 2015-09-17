@@ -15,7 +15,7 @@ public class ResponseProductList extends Alternative {
     @SerializedName("page")
     private int page;
     @SerializedName("limit")
-    public int limit;
+    private int limit;
     @SerializedName("pages")
     private int pages;
     @SerializedName("total")

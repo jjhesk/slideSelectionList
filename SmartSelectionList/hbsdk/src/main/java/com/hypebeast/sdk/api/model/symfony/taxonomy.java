@@ -14,8 +14,9 @@ public class taxonomy extends itemDisplay {
     private String taxon_name;
     @SerializedName("slug")
     private String slug;
-    /*    @SerializedName("permalink")
+/*    @SerializedName("permalink")
     private String permalink;*/
+
     @SerializedName("description")
     private String description;
 
