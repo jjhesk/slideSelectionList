@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TradLuLu</string>
     <string name="title_activity_maps">Map</string>
+    <string name="okay">OK</string>
 </resources>

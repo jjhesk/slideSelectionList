@@ -14,5 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <ProgressBar
+            android:id="@+id/ui_loading_progress_bar_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 </RelativeLayout>

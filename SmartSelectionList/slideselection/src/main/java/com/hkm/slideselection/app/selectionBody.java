@@ -30,7 +30,7 @@ public abstract class selectionBody extends Fragment {
      * Called when a fragment is first attached to its activity.
      * {@link #onCreate(Bundle)} will be called after this.
      *
-     * @param activity
+     * @param activity act now
      */
     @Override
     public void onAttach(Activity activity) {

@@ -15,11 +15,11 @@ public class ResponseProductList extends Alternative {
     @SerializedName("page")
     private int page;
     @SerializedName("limit")
-    private int limit;
+    public int limit;
     @SerializedName("pages")
     private int pages;
     @SerializedName("total")
-    private int total;
+    public int total;
     @SerializedName("_embedded")
     private embededList embededitems;
     @SerializedName("facets")

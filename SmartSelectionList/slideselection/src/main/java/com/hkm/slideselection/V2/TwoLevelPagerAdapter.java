@@ -66,6 +66,9 @@ public class TwoLevelPagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
+    public int getCurreLv() {
+        return level_current;
+    }
     /*  @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;

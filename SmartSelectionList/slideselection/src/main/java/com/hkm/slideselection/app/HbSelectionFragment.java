@@ -20,22 +20,16 @@ import com.hkm.slideselection.worker.bEZ;
 import com.hkm.slideselection.worker.bridgeEZ;
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
-
 /**
+ * HB Filter by Heskeyo Kam
  * Created by hesk on 16/9/15.
  */
 public class HbSelectionFragment extends selectionBody {
-    private SelectChoice lv0;
-    private Handler uiHandler = new Handler();
     private TintImageView back, apply, reset;
     private ProgressBar mProgress;
     private TextView title_navigation;
-    private ArrayList<SelectChoice> selection_memory = new ArrayList<>();
-    private int level = 0;
     private boolean initialize = false, isInProgress = false;
     private bridgeEZ mInterface = new bEZ();
-
     protected TwoLevelPagerAdapter adapter;
 
     public static HbSelectionFragment newInstance(SelectChoice data) {
@@ -50,32 +44,17 @@ public class HbSelectionFragment extends selectionBody {
         super.onViewCreated(view, savedInstanceState);
         adapter = new TwoLevelPagerAdapter(getChildFragmentManager(), getArguments());
         mViewPager.setAdapter(adapter);
-        /*
-            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });*/
+        initialize = true;
         mViewPager.setCurrentItem(0);
         bindViews(view);
-        inProgressDone();
+        inProgressDoneSimple();
     }
-
 
     @Override
     public boolean onPressBack() {
-        return adapter.levelBack(mViewPager);
+        boolean re = adapter.levelBack(mViewPager);
+        apply_level_to_tools(adapter.getCurreLv());
+        return re;
     }
 
     /**
@@ -106,11 +85,11 @@ public class HbSelectionFragment extends selectionBody {
     }
 
     private void bindViews(View mv) {
+        mProgress = (ProgressBar) mv.findViewById(R.id.sssl_ui_loading_progress_bar_xx);
         title_navigation = (TextView) mv.findViewById(R.id.sssl_title_navigation);
         back = (TintImageView) mv.findViewById(R.id.sssl_b_back);
         apply = (TintImageView) mv.findViewById(R.id.sssl_b_filter_apply);
         reset = (TintImageView) mv.findViewById(R.id.sssl_b_filter_clear);
-        mProgress = (ProgressBar) mv.findViewById(R.id.sssl_ui_loading_progress_bar_xx);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +110,6 @@ public class HbSelectionFragment extends selectionBody {
             public void onClick(View v) {
                 Log.d("result_f", "remove the filter and reset");
                 start_new_filter();
-                inProgress();
             }
         });
         inProgress();
@@ -163,24 +141,28 @@ public class HbSelectionFragment extends selectionBody {
         reveal_apply(false);
     }
 
+    private void inProgressDoneSimple() {
+        initialize = false;
+        mProgress.animate().alpha(0f);
+        reveal_apply(false);
+    }
+
     public void inProgressDone() {
         if (mProgress != null) {
             mProgress.animate().alpha(0f).withEndAction(new Runnable() {
                 @Override
                 public void run() {
                     isInProgress = false;
-                    reveal_apply(true);
+                    apply_level_to_tools(adapter.getCurreLv());
                 }
             });
         }
+
         initialize = false;
     }
 
-    public void setInterfaceListener(bridgeEZ listener) {
-        mInterface = listener;
-    }
-
     private void start_new_filter() {
+        inProgress();
         initialize = true;
         mInterface.request_new_filter();
     }
