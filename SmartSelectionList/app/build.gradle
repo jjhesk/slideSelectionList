@@ -9,7 +9,7 @@ android {
         targetSdkVersion 22
         versionCode 2
         versionName '1.2 standr'
-        multiDexEnabled = true
+      //   multiDexEnabled = true
     }
     buildTypes {
         release {
