@@ -20,7 +20,9 @@ repositories {
    maven { url 'http://dl.bintray.com/jjhesk/maven/' }
 }
 
+compile 'com.hkm.slideSelectionList:slideselection:1.0.0'
 
+```
 
 License
 --------
@@ -40,5 +42,3 @@ License
     limitations under the License.
 
 
-compile 'com.hkm.slideSelectionList:slideselection:1.0.0'
-```
