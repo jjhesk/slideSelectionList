@@ -118,15 +118,15 @@ public class hbSuport {
         final FilterGroup gp = saved_list.product_list.getfacets();
         final SelectChoice selection_ch = new SelectChoice(false, name);
         if (name.contains(SIZE_LABEL)) {
-            selection_ch.setResourceData(gp.convertToStringList(gp.size));
+            selection_ch.setResourceData(FilterGroup.convertToStringList(gp.size));
         } else if (name.contains(BRAND_LABEL)) {
-            selection_ch.setResourceData(gp.convertToStringList(gp.brand));
+            selection_ch.setResourceData(FilterGroup.convertToStringList(gp.brand));
         } else if (name.contains(CATEGORY_LABEL)) {
-            selection_ch.setResourceData(gp.convertToStringList(gp.category));
+            selection_ch.setResourceData(FilterGroup.convertToStringList(gp.category));
         } else if (name.contains(COLOR_LABEL)) {
-            selection_ch.setResourceData(gp.convertToStringList(gp.color));
+            selection_ch.setResourceData(FilterGroup.convertToStringList(gp.color));
         } else if (name.contains(PRICE_LABEL)) {
-            selection_ch.setResourceData(gp.convertToStringList(gp.priceRange));
+            selection_ch.setResourceData(FilterGroup.convertToStringList(gp.priceRange));
         }
         selection_ch.setLevel(1);
         return selection_ch;
