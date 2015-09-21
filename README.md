@@ -20,7 +20,7 @@ repositories {
    maven { url 'http://dl.bintray.com/jjhesk/maven/' }
 }
 
-compile 'com.hkm.slideSelectionList:slideselection:1.0.0'
+compile 'com.hkm.slideSelectionList:slideselection:1.0.9'
 
 ```
 
