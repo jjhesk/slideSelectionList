@@ -1,4 +1,4 @@
-package com.tradlulu.demoCollectionList.MyList;
+package com.tradlulu.demoCollectionList.Module;
 
 import android.util.Log;
 
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by hesk on 15/9/15.
  */
-public class hbSuport {
+public class HBDataSupport {
     public static final String
             SIZE_LABEL = "Size",
             BRAND_LABEL = "Brand",
@@ -78,37 +78,6 @@ public class hbSuport {
         return lv0;
     }
 
-    private static boolean inList(String selected, List<SelectChoice> selection_memory) {
-        Iterator<SelectChoice> io = selection_memory.iterator();
-        while (io.hasNext()) {
-            SelectChoice mSelect = io.next();
-            if (mSelect.isTag(selected)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    private static void getlist(final String selected, final ViewPagerHolder pager, final DynamicAdapter mAdapter) {
-      /*  Iterator<SelectChoice> io = selection_memory.iterator();
-        while (io.hasNext()) {
-            SelectChoice mSelect = io.next();
-            if (mSelect.isTag(selected)) {
-                mAdapter.levelForward(pager, mSelect);
-             inProgressDone();
-                return;
-            }
-        }*/
-        /**
-         * mock run async
-         */
-
-        SelectChoice list_end = new SelectChoice(false, selected);
-        list_end.setResourceData(new String[]{"onef", "fwfawf", "wafe", "Ffsfsd", "sfafef", "Fasfe"});
-        mAdapter.levelForward(pager, list_end);
-        //  inProgressDone();
-    }
 
     public static SelectChoice fromFirstColumn(
             final List<SelectChoice> selection_memory,
@@ -150,7 +119,7 @@ public class hbSuport {
     public static String developJson(Iterator<SelectChoice> io) {
         FilterApplication filter = FilterApplication.newFilter();
         while (io.hasNext()) {
-            hbSuport.check_preapply_filter(filter, io.next());
+            HBDataSupport.check_preapply_filter(filter, io.next());
         }
         String json = filter.getJson();
         Log.d("check_f_result", json);

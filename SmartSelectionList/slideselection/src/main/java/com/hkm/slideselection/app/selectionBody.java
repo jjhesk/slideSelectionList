@@ -3,6 +3,7 @@ package com.hkm.slideselection.app;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,20 +25,6 @@ public abstract class selectionBody extends Fragment {
 
     protected static Bus mBus;
     protected ViewPagerHolder mViewPager;
-
-
-    /**
-     * Called when a fragment is first attached to its activity.
-     * {@link #onCreate(Bundle)} will be called after this.
-     *
-     * @param activity act now
-     */
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (mBus == null)
-            mBus = new Bus("fragmentcontrol");
-    }
 
     public static SimpleStepSelectionFragment firstLevel(SelectChoice level) {
         SimpleStepSelectionFragment g = new SimpleStepSelectionFragment();
@@ -80,9 +67,36 @@ public abstract class selectionBody extends Fragment {
 
     public abstract boolean onPressBack();
 
+
     public abstract void onEvent(SelectChoice event_choice);
 
+
     public abstract void onEvent(MessageEvent event_integer);
+
+
+    /**
+     * @param activity action now
+     * @deprecated Use {@link #onAttach(Context)} instead.
+     */
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (mBus == null)
+            mBus = new Bus("fragmentcontrol");
+    }
+
+    /**
+     * Called when a fragment is first attached to its context.
+     * {@link #onCreate(Bundle)} will be called after this.
+     *
+     * @param context context
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mBus == null)
+            mBus = new Bus("fragmentcontrol");
+    }
 
     public Bus getBusInstance() {
         return mBus;

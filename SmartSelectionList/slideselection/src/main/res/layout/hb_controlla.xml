@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/sssl_b_filter_clear"
             android:layout_toRightOf="@id/sssl_b_back"
-            android:gravity="center_horizontal|center_vertical"
+            android:gravity="left|center_vertical"
             android:textSize="20sp" />
 
 

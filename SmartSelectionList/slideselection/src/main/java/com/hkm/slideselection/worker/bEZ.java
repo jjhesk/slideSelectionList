@@ -15,6 +15,11 @@ public class bEZ implements bridgeEZ {
     }
 
     @Override
+    public void dismiss_back() {
+
+    }
+
+    @Override
     public void request_applied() {
 
     }

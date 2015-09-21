@@ -4,6 +4,7 @@ package com.hkm.slideselection.V1;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -66,10 +67,24 @@ public class SimpleSingleList extends Fragment {
         return list;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onAttach(Context activity) {
+        super.onAttach(activity);
+        onAttachToContext(activity);
+    }
+
+    @Deprecated
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            onAttachToContext(activity);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    protected void onAttachToContext(Context context) {
         try {
             if (getParentFragment() instanceof SimpleStepSelectionFragment) {
                 SimpleStepSelectionFragment parent = (SimpleStepSelectionFragment) getParentFragment();

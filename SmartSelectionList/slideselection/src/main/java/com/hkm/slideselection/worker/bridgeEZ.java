@@ -9,6 +9,7 @@ import com.hkm.slideselection.app.HbSelectionFragment;
  * Created by hesk on 16/9/15.
  */
 public interface bridgeEZ {
+    void dismiss_back();
     void request_applied();
 
     void request_new_filter();
