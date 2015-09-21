@@ -8,7 +8,8 @@ The goal is to develop an amazing library with the latest android library to mak
 
 ## Feature Sample App:
 - [Applied HB Filte EZ](https://github.com/jjhesk/slideSelectionList/blob/master/SmartSelectionList/app/src/main/java/com/tradlulu/demoCollectionList/AppliedHBFilteEZ.java) for applied API application
-- [Basic App Logic](https://github.com/jjhesk/slideSelectionList/blob/master/SmartSelectionList/app/src/main/java/com/tradlulu/demoCollectionList/AppliedHBFilter.java) for non-API simple implemenation
+
+- [API helpers](https://github.com/jjhesk/slideSelectionList/tree/master/SmartSelectionList/app/src/main/java/com/tradlulu/demoCollectionList/Module)
 
 Applied with logic from HbSelectionFragment which is the enhanced flow logic from backward and forward selection list.
 
