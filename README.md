@@ -1,4 +1,4 @@
-# Sliding Selection List
+# Sliding Selection List [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-slideSelectionList-green.svg?style=flat)](https://android-arsenal.com/details/1/2538)
 The goal is to develop an amazing library with the latest android library to make a nagivation based menu. The viewpager based animated pushed level by level list menu support both multiple and single selection. The library to resolve real time sliding selection list. This is the solution for integrated complex filter and location picker
 
 ## Features:
