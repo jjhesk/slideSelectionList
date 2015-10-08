@@ -34,11 +34,11 @@ import retrofit.client.Response;
  * Created by hesk on 21/9/15.
  */
 public class HBFilterEZHelper implements bridgeEZ, retrofit.Callback<ReponseNormal> {
-    private ReponseNormal latest_response, default_endpoint;
-    private HbSelectionFragment thecontroller;
-    private SelectChoice menu_data;
+    protected ReponseNormal latest_response, default_endpoint;
+    protected HbSelectionFragment thecontroller;
+    protected SelectChoice menu_data;
     private boolean isInProgress = false;
-    private ArrayList<SelectChoice> selection_memory = new ArrayList<>();
+    protected ArrayList<SelectChoice> selection_memory = new ArrayList<>();
     private HBStoreApiClient client;
     private Products products_interface;
     private int level = 0;
@@ -195,6 +195,14 @@ public class HBFilterEZHelper implements bridgeEZ, retrofit.Callback<ReponseNorm
                         latest_response,
                         menu_data.selected_string()
                 ));
-        return;
+        if (menu_data.selected_string().equalsIgnoreCase("brand")) {
+            thecontroller.setSearchBar(true);
+            thecontroller.setNagviationTitle("");
+        }
+    }
+
+    @Override
+    public void search_query(CharSequence char_seq) {
+
     }
 }

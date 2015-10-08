@@ -33,4 +33,9 @@ public class bEZ implements bridgeEZ {
     public void HomeSelect(ViewPager pager, TwoLevelPagerAdapter mAdapter, int position, final HbSelectionFragment hb) {
 
     }
+
+    @Override
+    public void search_query(CharSequence char_seq) {
+
+    }
 }

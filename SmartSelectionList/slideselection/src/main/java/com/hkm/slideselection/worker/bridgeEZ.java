@@ -10,6 +10,7 @@ import com.hkm.slideselection.app.HbSelectionFragment;
  */
 public interface bridgeEZ {
     void dismiss_back();
+
     void request_applied();
 
     void request_new_filter();
@@ -26,5 +27,5 @@ public interface bridgeEZ {
             final int position,
             final HbSelectionFragment hb);
 
-
+    void search_query(final CharSequence char_seq);
 }

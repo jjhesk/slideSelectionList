@@ -5,7 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.internal.widget.TintImageView;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hkm.slideselection.R;
+import com.hkm.slideselection.search.SearchBar;
 import com.hkm.slideselection.worker.MessageEvent;
 import com.hkm.slideselection.worker.SelectChoice;
 import com.hkm.slideselection.V2.TwoLevelPagerAdapter;
@@ -32,6 +34,7 @@ public class HbSelectionFragment extends selectionBody {
     private boolean initialize = false, isInProgress = false;
     private bridgeEZ mInterface = new bEZ();
     protected TwoLevelPagerAdapter adapter;
+    protected SearchBar mSearchBar;
 
     public static HbSelectionFragment newInstance(SelectChoice data) {
         final HbSelectionFragment b = new HbSelectionFragment();
@@ -57,13 +60,26 @@ public class HbSelectionFragment extends selectionBody {
         mViewPager.setAdapter(adapter);
         initialize = true;
         mViewPager.setCurrentItem(0);
+        mSearchBar = new SearchBar(view, new SearchBar.onEnterQuery() {
+            @Override
+            public void query(CharSequence v) {
+                mInterface.search_query(v);
+                adapter.searchBy(v);
+            }
+        });
         bindViews(view);
         inProgressDoneSimple();
+    }
+
+    public void setSearchBar(boolean fool) {
+        mSearchBar.enable(fool);
+        adapter.setSearchEnable(fool);
     }
 
     @Override
     public boolean onPressBack() {
         boolean re = adapter.levelBack(mViewPager);
+        setSearchBar(false);
         apply_level_to_tools(adapter.getCurreLv());
         return re;
     }
@@ -107,7 +123,7 @@ public class HbSelectionFragment extends selectionBody {
 
     @Override
     protected int getXml() {
-        return R.layout.hb_controlla;
+        return R.layout.filter_frame;
     }
 
     public void setNagviationTitle(String mTitle) {
@@ -227,41 +243,53 @@ public class HbSelectionFragment extends selectionBody {
         mInterface.HomeSelect(mViewPager, adapter, event_integer.At(), this);
     }
 
-    /**
-     * Called to ask the fragment to save its current dynamic state, so it
-     * can later be reconstructed in a new instance of its process is
-     * restarted.  If a new instance of the fragment later needs to be
-     * created, the data you place in the Bundle here will be available
-     * in the Bundle given to {@link #onCreate(Bundle)},This corresponds to {@link Activity#onSaveInstanceState(Bundle)
-     * Activity.onSaveInstanceState(Bundle)} and most of the discussion there
-     * applies here as well.  Note however: <em>this method may be called
-     * at any time before {@link #onDestroy()}</em>.  There are many situations
-     * where a fragment may be mostly torn down (such as when placed on the
-     * back stack with no UI showing), but its state will not be saved until
-     * its owning activity actually needs to save its state.
-     *
-     * @param outState Bundle in which to place your saved state.
-     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d("HBSelected", "save state");
+        // SavedState savedState = new SavedState(outState);
     }
 
-    /**
-     * Called when all saved state has been restored into the view hierarchy
-     * of the fragment.  This can be used to do initialization based on saved
-     * state that you are letting the view hierarchy track itself, such as
-     * whether check box widgets are currently checked.  This is called
-     * after {@link #onActivityCreated(Bundle)} and before
-     * {@link #onStart()}.
-     *
-     * @param savedInstanceState If the fragment is being re-created from
-     *                           a previous saved state, this is the state.
-     */
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         Log.d("HBSelected", "restore state");
+    }
+
+    /**
+     * A {@link android.os.Parcelable} representing the {@link }'s
+     * state.
+     */
+    public static class SavedState extends View.BaseSavedState {
+
+        private int mProgress;
+
+        public SavedState(Parcelable parcel) {
+            super(parcel);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            mProgress = in.readInt();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(mProgress);
+        }
+
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+
+            @Override
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/sssl_search_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone">
+
+
+    <!--   <TextView
+           android:id="@id/sssl_search_placeholder"
+           style="@style/item_single_row_style"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_alignParentLeft="true"
+           android:layout_toLeftOf="@id/sssl_search_icon"
+           android:text="Filter keyword" />-->
+
+    <EditText
+        android:id="@id/sssl_search_place"
+        style="@style/item_single_row_style_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/sssl_search_icon" />
+
+    <android.support.v7.internal.widget.TintImageView
+        android:id="@id/sssl_search_icon"
+        style="@android:style/Widget.Holo.ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_finder" />
+</RelativeLayout>

@@ -32,6 +32,14 @@ public class TwoLevelPagerAdapter extends FragmentStatePagerAdapter {
         level_current = 0;
     }
 
+    public void searchBy(CharSequence word) {
+        secondPage.updateSearchWord(word);
+    }
+
+    public void setSearchEnable(boolean b) {
+        secondPage.setSearchable(b);
+    }
+
     public void updateHome(ViewPager pager, SelectChoice selection_choices) {
         firstPage.updateNewList(selection_choices);
         levelBack(pager);

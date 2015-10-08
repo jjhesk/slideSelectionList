@@ -10,10 +10,14 @@ import android.os.Bundle;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -32,12 +36,13 @@ import com.marshalchen.ultimaterecyclerview.uiUtils.ScrollSmoothLineaerLayoutMan
 import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by hesk on 10/9/15.
  */
-public class SimpleSingleList extends Fragment {
+public class SimpleSingleList extends Fragment implements Filter.FilterListener {
     public static final String SELECTION = "selected";
     public static final String DATASTRING = "strings";
     public static final String LEVEL = "mlevel";
@@ -45,8 +50,10 @@ public class SimpleSingleList extends Fragment {
     protected UltimateRecyclerView mRecyclerView;
     protected ProgressBar mProgressBar;
     protected List<String> mList = new ArrayList<>();
+    protected ArrayList<String> mData = new ArrayList<>();
     protected ItemTouchListenerAdapter itemTouchListenerAdapter;
     private SelectChoice myLevelConfiguration;
+    protected boolean searchable = false;
     private Bus mBus;
 
     public static SimpleSingleList newInstance(int[] selections, String[] list, int order) {
@@ -142,7 +149,8 @@ public class SimpleSingleList extends Fragment {
         }
     }
 
-    protected final UltimateViewAdapter madapter = new UltimateViewAdapter() {
+    private class Filter extends UltimateViewAdapter implements Filterable {
+
         @Override
         public UltimateRecyclerviewViewHolder getViewHolder(View view) {
             return new UltimateRecyclerviewViewHolder(view);
@@ -184,7 +192,53 @@ public class SimpleSingleList extends Fragment {
         public void onBindHeaderViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
 
         }
-    };
+
+        /**
+         * <p>Returns a filter that can be used to constrain data with a filtering
+         * pattern.</p>
+         * <p/>
+         * <p>This method is usually implemented by {@link Adapter}
+         * classes.</p>
+         *
+         * @return a filter used to constrain data
+         */
+        @Override
+        public android.widget.Filter getFilter() {
+            android.widget.Filter filter = new android.widget.Filter() {
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    FilterResults filterResults = new FilterResults();
+                    if (!TextUtils.isEmpty(constraint)) {
+                        // Retrieve the autocomplete results.
+                        List<String> searchData = new ArrayList<>();
+                        Iterator<String> typeAheadData = mList.iterator();
+                        while (typeAheadData.hasNext()) {
+                            String str = typeAheadData.next();
+                            if (str.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
+                                searchData.add(str);
+                            }
+                        }
+                        // Assign the data to the FilterResults
+                        filterResults.values = searchData;
+                        filterResults.count = searchData.size();
+                    }
+                    return filterResults;
+                }
+
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+                    if (results.values != null) {
+                        mData = (ArrayList<String>) results.values;
+                        notifyDataSetChanged();
+                    }
+                }
+            };
+            return filter;
+        }
+    }
+
+    protected final UltimateViewAdapter madapter = new Filter();
+
 
     protected void doneInitialLoading() {
         mProgressBar.animate().alpha(0).withEndAction(new Runnable() {
@@ -280,5 +334,24 @@ public class SimpleSingleList extends Fragment {
         return getArguments().getStringArray(DATASTRING)[position];
     }
 
+    @Override
+    public void onFilterComplete(int count) {
+        if (searchable) {
+            if (count > 0) {
+                //  showSuggestions();
+            } else {
+                //  dismissSuggestions();
+            }
+        }
+    }
 
+    public void updateSearchWord(CharSequence s) {
+        if (madapter != null && madapter instanceof Filterable && searchable) {
+            ((Filterable) madapter).getFilter().filter(s, SimpleSingleList.this);
+        }
+    }
+
+    public void setSearchable(boolean enable) {
+        searchable = enable;
+    }
 }

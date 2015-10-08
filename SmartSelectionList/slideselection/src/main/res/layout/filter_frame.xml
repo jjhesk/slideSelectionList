@@ -20,15 +20,29 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_back_adjusted" />
 
-        <TextView
-            android:id="@id/sssl_title_navigation"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/sssl_b_filter_clear"
-            android:layout_toRightOf="@id/sssl_b_back"
-            android:gravity="left|center_vertical"
-            android:textSize="20sp" />
+            android:layout_toRightOf="@id/sssl_b_back">
 
+            <TextView
+                android:id="@id/sssl_title_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/sssl_b_back">
+
+            <include layout="@layout/search_bar" />
+        </RelativeLayout>
 
         <android.support.v7.internal.widget.TintImageView
             android:id="@+id/sssl_b_filter_clear"

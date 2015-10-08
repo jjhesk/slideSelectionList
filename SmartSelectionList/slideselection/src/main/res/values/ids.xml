@@ -13,4 +13,8 @@
     <item name="sssl_b_back" type="id" />
     <item name="sssl_ui_loading_progress_bar_xx" type="id" />
     <item name="sssl_title_navigation" type="id" />
+    <item name="sssl_search_place" type="id" />
+    <item name="sssl_search_icon" type="id" />
+    <item name="sssl_search_container" type="id" />
+    <item name="sssl_search_placeholder" type="id" />
 </resources>

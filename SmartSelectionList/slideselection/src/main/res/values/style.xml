@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="item_single_row_style">
         <item name="android:layout_marginLeft">@dimen/textview_horizontal_margin</item>
         <item name="android:layout_marginRight">@dimen/textview_horizontal_margin</item>
@@ -7,4 +8,14 @@
         <item name="android:layout_marginBottom">@dimen/textview_vertical_margin</item>
         <item name="android:textSize">@dimen/item_single_text_size</item>
     </style>
+
+    <style name="item_single_row_style_edit">
+        <item name="android:textSize">@dimen/item_single_text_size</item>
+        <item name="android:imeOptions">actionGo</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:selectAllOnFocus">true</item>
+        <item name="android:elegantTextHeight" tools:targetApi="lollipop">true</item>
+        <item name="android:autoLink">none</item>
+    </style>
+
 </resources>
