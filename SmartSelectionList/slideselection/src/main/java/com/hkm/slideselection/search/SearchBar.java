@@ -26,6 +26,7 @@ public class SearchBar implements TextView.OnEditorActionListener, TextWatcher {
     private TextView mPlaceHolder;
     private onEnterQuery mQuery;
     private Context mContext;
+    private boolean enableSearch;
 
     public SearchBar(View root, onEnterQuery query) {
         this(root);
@@ -55,8 +56,13 @@ public class SearchBar implements TextView.OnEditorActionListener, TextWatcher {
         searchButton = (TintImageView) root.findViewById(R.id.sssl_search_icon);
     }
 
+    public boolean isEnableSubFilter() {
+        return enableSearch;
+    }
+
     public void enable(boolean b) {
-        if (b) {
+        enableSearch = b;
+        if (enableSearch) {
             if (container.getVisibility() == View.GONE) {
                 container.setVisibility(View.VISIBLE);
             }

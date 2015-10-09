@@ -78,10 +78,10 @@ public class HbSelectionFragment extends selectionBody {
 
     @Override
     public boolean onPressBack() {
-        boolean re = adapter.levelBack(mViewPager);
         setSearchBar(false);
+        boolean h = adapter.levelBack(mViewPager);
         apply_level_to_tools(adapter.getCurreLv());
-        return re;
+        return h;
     }
 
     public void setControlInterface(bridgeEZ mInterface) {
@@ -169,6 +169,7 @@ public class HbSelectionFragment extends selectionBody {
         if (enabled) {
             apply.setVisibility(View.VISIBLE);
             reset.setVisibility(View.VISIBLE);
+            setSearchBar(false);
         } else {
             apply.setVisibility(View.GONE);
             reset.setVisibility(View.GONE);
@@ -179,6 +180,7 @@ public class HbSelectionFragment extends selectionBody {
         if (lv == 0) {
             apply.setVisibility(View.VISIBLE);
             reset.setVisibility(View.VISIBLE);
+            setSearchBar(false);
         } else {
             apply.setVisibility(View.GONE);
             reset.setVisibility(View.GONE);
@@ -254,6 +256,7 @@ public class HbSelectionFragment extends selectionBody {
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         Log.d("HBSelected", "restore state");
+        //setSearchBar(false);
     }
 
     /**

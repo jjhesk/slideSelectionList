@@ -1,5 +1,9 @@
 package com.hkm.slideselection.worker;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  * Created by hesk on 10/9/15.
  */
@@ -43,8 +47,36 @@ public class SelectChoice extends LevelResources<String> {
         return stockArr;
     }
 
+    public ArrayList<String> getSource() {
+        return resource;
+    }
 
     public String toString() {
         return "";
+    }
+
+
+    public SelectChoice clone() {
+        if (isMultiSelection) {
+            return new SelectChoice(getSelections());
+        } else {
+            return new SelectChoice(getSelection());
+        }
+
+    }
+
+    public int getFromSubFilter(SelectChoice sub) {
+        String selected_item = sub.selected_string();
+        Iterator<String> k = resource.iterator();
+        int u = 0;
+        while (k.hasNext()) {
+            String e = k.next();
+            if (e.equalsIgnoreCase(selected_item)) {
+                return u;
+            }
+            u++;
+        }
+
+        return 0;
     }
 }

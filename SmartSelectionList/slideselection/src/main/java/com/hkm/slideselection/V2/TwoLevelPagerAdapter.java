@@ -37,7 +37,8 @@ public class TwoLevelPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public void setSearchEnable(boolean b) {
-        secondPage.setSearchable(b);
+        if (secondPage != null)
+            secondPage.setSearchable(b);
     }
 
     public void updateHome(ViewPager pager, SelectChoice selection_choices) {

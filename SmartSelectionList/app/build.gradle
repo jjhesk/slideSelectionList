@@ -9,7 +9,7 @@ android {
         targetSdkVersion 22
         versionCode 2
         versionName '1.2 standr'
-      //   multiDexEnabled = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -20,7 +20,6 @@ android {
     productFlavors {
     }
     dexOptions {
-        incremental true
         javaMaxHeapSize "4g"
     }
 }
@@ -30,6 +29,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.8.0'
     compile 'com.android.support:support-annotations:22.2.0'
     //https://github.com/IsseiAoki/SimpleCropView
+    compile 'com.android.support:multidex:1.0.0'
     compile 'com.isseiaoki:simplecropview:1.0.8'
     //https://github.com/kingideayou/SlideBottomPanel
     compile 'com.github.kingideayou:SlideBottomPanel:1.0.3'
@@ -40,4 +40,6 @@ dependencies {
     compile project(':hbsdk')
     //compile 'com.jakewharton:butterknife:5.1.1'
     //compile 'com.github.HKMOpen:SDKhb:1.0'
+    debugCompile 'me.drakeet.library:crashwoodpecker:0.9.7'
+    releaseCompile 'me.drakeet.library:crashwoodpecker-do-nothing:0.9.7'
 }

@@ -46,15 +46,17 @@ public class SimpleSingleList extends Fragment implements Filter.FilterListener 
     public static final String SELECTION = "selected";
     public static final String DATASTRING = "strings";
     public static final String LEVEL = "mlevel";
+    protected boolean searchable = false;
+    protected final FilterAdapter madapter = new FilterAdapter();
+    protected List<String> mList = new ArrayList<>();
+    protected ArrayList<String> mFilteredData = new ArrayList<>();
+    protected ItemTouchListenerAdapter itemTouchListenerAdapter;
+    private SelectChoice myLevelConfiguration, filteredConfiguration;
     protected ScrollSmoothLineaerLayoutManager mLayoutManager;
     protected UltimateRecyclerView mRecyclerView;
     protected ProgressBar mProgressBar;
-    protected List<String> mList = new ArrayList<>();
-    protected ArrayList<String> mData = new ArrayList<>();
-    protected ItemTouchListenerAdapter itemTouchListenerAdapter;
-    private SelectChoice myLevelConfiguration;
-    protected boolean searchable = false;
     private Bus mBus;
+
 
     public static SimpleSingleList newInstance(int[] selections, String[] list, int order) {
         SimpleSingleList b = new SimpleSingleList();
@@ -149,7 +151,7 @@ public class SimpleSingleList extends Fragment implements Filter.FilterListener 
         }
     }
 
-    private class Filter extends UltimateViewAdapter implements Filterable {
+    private class FilterAdapter extends UltimateViewAdapter implements Filterable {
 
         @Override
         public UltimateRecyclerviewViewHolder getViewHolder(View view) {
@@ -194,11 +196,8 @@ public class SimpleSingleList extends Fragment implements Filter.FilterListener 
         }
 
         /**
-         * <p>Returns a filter that can be used to constrain data with a filtering
-         * pattern.</p>
-         * <p/>
-         * <p>This method is usually implemented by {@link Adapter}
-         * classes.</p>
+         * Returns a filter that can be used to constrain data with a filtering
+         * pattern.This method is usually implemented by {@link Adapter}classes.
          *
          * @return a filter used to constrain data
          */
@@ -207,20 +206,27 @@ public class SimpleSingleList extends Fragment implements Filter.FilterListener 
             android.widget.Filter filter = new android.widget.Filter() {
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
-                    FilterResults filterResults = new FilterResults();
+                    final FilterResults filterResults = new FilterResults();
+                    mFilteredData.clear();
                     if (!TextUtils.isEmpty(constraint)) {
                         // Retrieve the autocomplete results.
                         List<String> searchData = new ArrayList<>();
-                        Iterator<String> typeAheadData = mList.iterator();
+                        Iterator<String> typeAheadData = myLevelConfiguration.getSource().iterator();
                         while (typeAheadData.hasNext()) {
                             String str = typeAheadData.next();
-                            if (str.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
+                            final boolean startwith = str.toLowerCase().startsWith(constraint.toString().toLowerCase().trim());
+                            final boolean contains = str.toLowerCase().contains(constraint.toString().toLowerCase().trim());
+                            if (startwith || contains) {
                                 searchData.add(str);
                             }
                         }
                         // Assign the data to the FilterResults
                         filterResults.values = searchData;
                         filterResults.count = searchData.size();
+                    } else {
+                        //perform when the search field is empty
+                        //mFilteredData.addAll(mList);
+                        //  updateNewList(myLevelConfiguration);
                     }
                     return filterResults;
                 }
@@ -228,17 +234,22 @@ public class SimpleSingleList extends Fragment implements Filter.FilterListener 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
                     if (results.values != null) {
-                        mData = (ArrayList<String>) results.values;
-                        notifyDataSetChanged();
+                        ArrayList<String> tries = (ArrayList<String>) results.values;
+                        if (tries.size() > 0) {
+                            filteredConfiguration = myLevelConfiguration.clone();
+                            filteredConfiguration.setResourceData(tries);
+                            filteredConfiguration.setLevel(myLevelConfiguration.getLevel());
+                            filteredConfiguration.setTag(myLevelConfiguration.getTag());
+                            updateNewList(filteredConfiguration);
+                        } else {
+                            updateNewList(myLevelConfiguration);
+                        }
                     }
                 }
             };
             return filter;
         }
     }
-
-    protected final UltimateViewAdapter madapter = new Filter();
-
 
     protected void doneInitialLoading() {
         mProgressBar.animate().alpha(0).withEndAction(new Runnable() {
@@ -255,7 +266,13 @@ public class SimpleSingleList extends Fragment implements Filter.FilterListener 
             myLevelConfiguration.setSelectedAtPos(position);
             mBus.post(myLevelConfiguration);
         } else {
-            mBus.post(new MessageEvent(position));
+            MessageEvent mmes;
+            if (searchable) {
+                mmes = new MessageEvent(myLevelConfiguration.getFromSubFilter(filteredConfiguration));
+            } else {
+                mmes = new MessageEvent(position);
+            }
+            mBus.post(mmes);
         }
     }
 

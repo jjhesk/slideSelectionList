@@ -18,6 +18,7 @@ public abstract class LevelResources<T extends Serializable> {
 
     public static final String TAG = "base";
 
+
     public LevelResources() {
         isMultiSelection = false;
     }
@@ -75,6 +76,10 @@ public abstract class LevelResources<T extends Serializable> {
 
     public boolean isTag(String name) {
         return tag == null ? false : name.equalsIgnoreCase(tag) || name.startsWith(tag);
+    }
+
+    public void setTag(String t) {
+        tag = t;
     }
 
     public String getTag() {
