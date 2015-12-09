@@ -3,8 +3,8 @@ package com.tradlulu.demoCollectionList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.widget.TintImageView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,7 +26,7 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
     private SimpleStepSelectionFragment thecontroller;
     private SelectChoice lv0;
     private Handler uiHandler = new Handler();
-    private TintImageView back;
+    private ImageButton back;
     private ProgressBar mProgress;
     private TextView title_navigation;
     private boolean isInProgress = false;
@@ -45,7 +45,7 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
     }
 
     private void bindothers() {
-        back = (TintImageView) findViewById(R.id.back_level);
+        back = (ImageButton) findViewById(R.id.back_level);
         title_navigation = (TextView) findViewById(R.id.title_navigation);
         mProgress = (ProgressBar) findViewById(R.id.ui_loading_progress_bar_xx);
         back.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +144,6 @@ public class FancyList extends AppCompatActivity implements bridgeChanger {
     public void HomeSelect(ViewPagerHolder pager, DynamicAdapter mAdapter, int position) {
 
     }
-
 
 
 }

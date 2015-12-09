@@ -2,13 +2,13 @@ package com.hkm.slideselection.search;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.internal.widget.TintImageView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,7 +22,7 @@ public class SearchBar implements TextView.OnEditorActionListener, TextWatcher {
     private RelativeLayout container;
     private EditText mEditText;
     private onEnterQuery enter;
-    private TintImageView searchButton;
+    private ImageButton searchButton;
     private TextView mPlaceHolder;
     private onEnterQuery mQuery;
     private Context mContext;
@@ -53,7 +53,7 @@ public class SearchBar implements TextView.OnEditorActionListener, TextWatcher {
         container = (RelativeLayout) root.findViewById(R.id.sssl_search_container);
         mEditText = (EditText) root.findViewById(R.id.sssl_search_place);
         //mPlaceHolder = (TextView) root.findViewById(R.id.sssl_search_placeholder);
-        searchButton = (TintImageView) root.findViewById(R.id.sssl_search_icon);
+        searchButton = (ImageButton) root.findViewById(R.id.sssl_search_icon);
     }
 
     public boolean isEnableSubFilter() {

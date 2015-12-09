@@ -7,9 +7,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v7.internal.widget.TintImageView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -28,7 +28,7 @@ import com.squareup.otto.Subscribe;
  * Created by hesk on 16/9/15.
  */
 public class HbSelectionFragment extends selectionBody {
-    private TintImageView back, apply, reset;
+    private ImageButton back, apply, reset;
     private ProgressBar mProgress;
     private TextView title_navigation;
     private boolean initialize = false, isInProgress = false;
@@ -133,9 +133,9 @@ public class HbSelectionFragment extends selectionBody {
     private void bindViews(View mv) {
         mProgress = (ProgressBar) mv.findViewById(R.id.sssl_ui_loading_progress_bar_xx);
         title_navigation = (TextView) mv.findViewById(R.id.sssl_title_navigation);
-        back = (TintImageView) mv.findViewById(R.id.sssl_b_back);
-        apply = (TintImageView) mv.findViewById(R.id.sssl_b_filter_apply);
-        reset = (TintImageView) mv.findViewById(R.id.sssl_b_filter_clear);
+        back = (ImageButton) mv.findViewById(R.id.sssl_b_back);
+        apply = (ImageButton) mv.findViewById(R.id.sssl_b_filter_apply);
+        reset = (ImageButton) mv.findViewById(R.id.sssl_b_filter_clear);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

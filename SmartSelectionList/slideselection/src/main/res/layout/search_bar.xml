@@ -23,7 +23,7 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/sssl_search_icon" />
 
-    <android.support.v7.internal.widget.TintImageView
+    <ImageButton
         android:id="@id/sssl_search_icon"
         style="@android:style/Widget.Holo.ActionButton"
         android:layout_width="wrap_content"
