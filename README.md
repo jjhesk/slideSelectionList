@@ -5,6 +5,8 @@ The goal is to develop an amazing library with the latest android library to mak
 - [x] level based menu with recyclerview and viewpager
 - [ ] custom transitions
 - [ ] mulitple selection and single selection combinations
+- [x] Filter search on the list item
+- [x] support library 23.1.1 +
 
 ## Feature Sample App:
 - [Applied HB Filte EZ](https://github.com/jjhesk/slideSelectionList/blob/master/SmartSelectionList/app/src/main/java/com/tradlulu/demoCollectionList/AppliedHBFilteEZ.java) for applied API application
@@ -21,7 +23,7 @@ repositories {
    maven { url 'http://dl.bintray.com/jjhesk/maven/' }
 }
 
-compile 'com.hkm.slideSelectionList:slideselection:1.0.9'
+compile 'com.hkm.slideSelectionList:slideselection:1.1.4'
 
 ```
 
